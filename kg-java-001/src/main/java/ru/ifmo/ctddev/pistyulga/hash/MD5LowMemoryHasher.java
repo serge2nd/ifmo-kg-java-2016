@@ -1,10 +1,8 @@
-package ru.ifmo.ctddev.pistyulga.md5;
+package ru.ifmo.ctddev.pistyulga.hash;
 
 import java.util.Arrays;
 
-import javax.xml.bind.DatatypeConverter;
-
-public class MD5LowMemoryHasher {
+public class MD5LowMemoryHasher implements LowMemoryHasher {
 	private static final String EMPTY_HASH_STR = "00000000000000000000000000000000";
 	
 	public static final String getEmptyHashStr() {
@@ -49,79 +47,133 @@ public class MD5LowMemoryHasher {
 	}
 	
 	private static int oneRoundF(int a, int b, int c, int d, int x, int t, int s) {
-		return b + ((a + F(b, c, d) + x + t) << s);
+		int y = a + F(b, c, d) + x + t;
+		return b + ((y << s) | (y >>> (32 - s)));
 	}
 	
 	private static int oneRoundG(int a, int b, int c, int d, int x, int t, int s) {
-		return b + ((a + G(b, c, d) + x + t) << s);
+		int y = a + G(b, c, d) + x + t;
+		return b + ((y << s) | (y >>> (32 - s)));
 	}
 	
 	private static int oneRoundH(int a, int b, int c, int d, int x, int t, int s) {
-		return b + ((a + H(b, c, d) + x + t) << s);
+		int y = a + H(b, c, d) + x + t;
+		return b + ((y << s) | (y >>> (32 - s)));
 	}
 	
 	private static int oneRoundI(int a, int b, int c, int d, int x, int t, int s) {
-		return b + ((a + I(b, c, d) + x + t) << s);
+		int y = a + I(b, c, d) + x + t;
+		return b + ((y << s) | (y >>> (32 - s)));
 	}
 	
-	private static int[] buf = { A, B, C, D };
-	private static int[] words = { 0, 0, 0, 0,
-								   0, 0, 0, 0,
-								   0, 0, 0, 0,
-								   0, 0, 0, 0 };
+	private int[] buf = { A, B, C, D };
+	private int[] words = { 0, 0, 0, 0,
+							0, 0, 0, 0,
+							0, 0, 0, 0,
+							0, 0, 0, 0 };
 	
-	private static long bytesCounter = 0;
-	private static boolean isFinished;
+	private long bytesCounter;
+	private boolean isFinished;
 	
-	public static void processByte(byte b) {
+	@Override
+	public LowMemoryHasher processByte(byte b) {
 		if (isFinished) {
 			clear();
 		}
 		
-		int wordNum = (int)((bytesCounter & 0x3FL) >>> 2);
+		int wordNum = ((int)bytesCounter & 0x3F) >>> 2;
 		int x = (int)b; x &= 0xFF;
 		
 		if (bytesCounter % 4 == 0) {
 			words[wordNum] = 0;
 		}
-		words[wordNum] |= (x << ((bytesCounter & 3) << 3));
+		words[wordNum] |= (x << (((int)bytesCounter & 3) << 3));
 		
 		if (++bytesCounter % 64 == 0) {
 			processBlock();
 		}
+		
+		return this;
 	}
 	
-	public static void clear() {
+	@Override
+	public LowMemoryHasher clear() {
 		buf[0] = A; buf[1] = B; buf[2] = C; buf[3] = D;
 		bytesCounter = 0; isFinished = false;
+		return this;
 	}
 	
-	public static int[] toIntArray() {
+	public int[] toIntArray() throws IllegalStateException {
 		if (!isFinished) {
-			finish();
+			throw new IllegalStateException("You must call finish() at first!");
 		}
-		return Arrays.copyOf(buf, buf.length);
-	}
-	
-	public static byte[] toByteArray() {
-		if (!isFinished) {
-			finish();
-		}
-		return null;
-	}
-	
-	public static String toHexString() {
-		if (!isFinished) {
-			finish();
-		}
-		return null;
-	}
-	
-	private static void finish() {
 		
+		int[] result = Arrays.copyOf(buf, buf.length);
+		
+		return result;
 	}
 	
-	private static void processBlock() {
+	public byte[] toByteArray() throws IllegalStateException {
+		if (!isFinished) {
+			throw new IllegalStateException("You must call finish() at first!");
+		}
+		
+		int bytesCount = buf.length * 4;
+		
+		byte[] result = new byte[bytesCount];
+		
+		for(int i = 0; i < bytesCount; i++) {
+			result[i] = (byte)(buf[i >>> 2] >>> ((3-(i & 3)) << 3));
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public String toString() throws IllegalStateException {
+		if (!isFinished) {
+			throw new IllegalStateException("You must call finish() at first!");
+		}
+		
+		String result = "";
+		for(int i = 0; i < buf.length; i++) {
+			result += Integer.toHexString((buf[i] >>> 24) |
+					  ((buf[i] >>> 8) & 0x00FF00) |
+					  ((buf[i] << 8) & 0xFF0000) |
+					   (buf[i] << 24));
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public LowMemoryHasher finish() {
+		long beforePaddingBytesCount = bytesCounter;
+		int bytesModulo64 = ((int)bytesCounter) & 0x3F;
+		int paddingBytesCount =
+				(bytesModulo64 < 56) ? (56 - bytesModulo64) : (120 - bytesModulo64);
+				
+		processByte((byte)0x80); paddingBytesCount--;
+		for(int i = 0; i < paddingBytesCount; i++) {
+			processByte((byte)0);
+		}
+		
+		long bitsCount = beforePaddingBytesCount * 8;
+		processByte((byte)bitsCount);
+		processByte((byte)(bitsCount >>> 8));
+		processByte((byte)(bitsCount >>> 16));
+		processByte((byte)(bitsCount >>> 24));
+		processByte((byte)(bitsCount >>> 32));
+		processByte((byte)(bitsCount >>> 40));
+		processByte((byte)(bitsCount >>> 48));
+		processByte((byte)(bitsCount >>> 56));
+		
+		isFinished = true;
+		
+		return this;
+	}
+	
+	private void processBlock() {
 		int a = buf[0], b = buf[1], c = buf[2], d = buf[3];
 		
 		// *** Step 1 ***

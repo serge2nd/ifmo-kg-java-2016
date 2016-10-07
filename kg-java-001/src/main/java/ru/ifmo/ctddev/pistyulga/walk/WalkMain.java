@@ -10,6 +10,7 @@ import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import ru.ifmo.ctddev.pistyulga.hash.MD5LowMemoryHasher;
 import ru.ifmo.ctddev.pistyulga.log.LogService;
 
 public class WalkMain {
@@ -27,7 +28,7 @@ public class WalkMain {
 	}
 
 	public static void main(String[] args) {
-		checkArgs(args);
+		/*checkArgs(args);
 		String pathsFilePath = args[0],
 				outputFilePath = args[1];
 		
@@ -46,6 +47,12 @@ public class WalkMain {
 		} catch(IOException e) {
 			LOG.log(Level.SEVERE, e.getMessage(), e);
 			System.exit(1);
-		}
+		}*/
+		
+		System.out.println(new MD5LowMemoryHasher()
+								.processByte((byte)0x6D)
+								.processByte((byte)0x64)
+								.processByte((byte)0x35)
+								.finish());
 	}
 }

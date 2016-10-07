@@ -10,8 +10,8 @@ import java.io.InputStreamReader;
 import java.io.Writer;
 import java.util.logging.Logger;
 
+import ru.ifmo.ctddev.pistyulga.hash.MD5LowMemoryHasher;
 import ru.ifmo.ctddev.pistyulga.log.LogService;
-import ru.ifmo.ctddev.pistyulga.md5.MD5LowMemoryHasher;
 
 
 class Walk {

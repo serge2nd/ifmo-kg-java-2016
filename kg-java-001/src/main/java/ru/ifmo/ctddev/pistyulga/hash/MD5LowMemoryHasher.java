@@ -81,18 +81,21 @@ public class MD5LowMemoryHasher implements LowMemoryHasher {
 			clear();
 		}
 		
-		int wordNum = ((int)bytesCounter & 0x3F) >>> 2;
-		int x = (int)b; x &= 0xFF;
+		int iBytesCount = (int)bytesCounter;
+		int x = (int)b & 0xFF;
 		
-		if (bytesCounter % 4 == 0) {
+		int wordNum = (iBytesCount & 0x3F) >>> 2;
+		
+		if ((iBytesCount & 3) == 0) {
 			words[wordNum] = 0;
 		}
-		words[wordNum] |= (x << (((int)bytesCounter & 3) << 3));
+		words[wordNum] |= (x << ((iBytesCount & 3) << 3));
 		
-		if (++bytesCounter % 64 == 0) {
+		if ((++iBytesCount & 0x3F) == 0) {
 			processBlock();
 		}
-		
+		bytesCounter++;
+
 		return this;
 	}
 	
@@ -118,12 +121,12 @@ public class MD5LowMemoryHasher implements LowMemoryHasher {
 			throw new IllegalStateException("You must call finish() at first!");
 		}
 		
-		int bytesCount = buf.length * 4;
+		int bufBytesCount = buf.length * 4;
 		
-		byte[] result = new byte[bytesCount];
+		byte[] result = new byte[bufBytesCount];
 		
-		for(int i = 0; i < bytesCount; i++) {
-			result[i] = (byte)(buf[i >>> 2] >>> ((3-(i & 3)) << 3));
+		for(int i = 0; i < bufBytesCount; i++) {
+			result[i] = (byte)(buf[i >>> 2] >>> ((3 - (i & 3)) << 3));
 		}
 		
 		return result;
@@ -135,19 +138,24 @@ public class MD5LowMemoryHasher implements LowMemoryHasher {
 			throw new IllegalStateException("You must call finish() at first!");
 		}
 		
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		for(int i = 0; i < buf.length; i++) {
-			result += Integer.toHexString((buf[i] >>> 24) |
-					  ((buf[i] >>> 8) & 0x00FF00) |
-					  ((buf[i] << 8) & 0xFF0000) |
-					   (buf[i] << 24));
+			result.append(Integer.toHexString(
+					   		 (buf[i] >>> 24) |
+					   		((buf[i] >>> 8) & 0x00FF00) |
+					   		((buf[i] << 8) & 0xFF0000) |
+					   		 (buf[i] << 24)));
 		}
 		
-		return result;
+		return result.toString();
 	}
 	
 	@Override
 	public LowMemoryHasher finish() {
+		if (isFinished) {
+			return this;
+		}
+		
 		long beforePaddingBytesCount = bytesCounter;
 		int bytesModulo64 = ((int)bytesCounter) & 0x3F;
 		int paddingBytesCount =
@@ -159,14 +167,9 @@ public class MD5LowMemoryHasher implements LowMemoryHasher {
 		}
 		
 		long bitsCount = beforePaddingBytesCount * 8;
-		processByte((byte)bitsCount);
-		processByte((byte)(bitsCount >>> 8));
-		processByte((byte)(bitsCount >>> 16));
-		processByte((byte)(bitsCount >>> 24));
-		processByte((byte)(bitsCount >>> 32));
-		processByte((byte)(bitsCount >>> 40));
-		processByte((byte)(bitsCount >>> 48));
-		processByte((byte)(bitsCount >>> 56));
+		for (int k = 0; k < 64; k += 8) {
+			processByte((byte)(bitsCount >>> k));
+		}
 		
 		isFinished = true;
 		

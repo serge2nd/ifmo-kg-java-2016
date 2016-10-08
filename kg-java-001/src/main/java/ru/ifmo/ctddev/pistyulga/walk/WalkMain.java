@@ -2,7 +2,6 @@ package ru.ifmo.ctddev.pistyulga.walk;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -10,11 +9,10 @@ import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import ru.ifmo.ctddev.pistyulga.hash.MD5LowMemoryHasher;
 import ru.ifmo.ctddev.pistyulga.log.LogService;
 
 public class WalkMain {
-	private static final Logger LOG = LogService.getLogger(WalkMain.class.getName());
+	private static final Logger LOG = LogService.getLogger();
 	
 	private static final String ENCODING = "UTF-8";
 	
@@ -28,7 +26,7 @@ public class WalkMain {
 	}
 
 	public static void main(String[] args) {
-		/*checkArgs(args);
+		checkArgs(args);
 		String pathsFilePath = args[0],
 				outputFilePath = args[1];
 		
@@ -38,21 +36,17 @@ public class WalkMain {
 			System.exit(1);
 		}
 		
-		LOG.info("Reading file list...");
+		LOG.info("Processing file list...");
 		
 		try(InputStream pathsInputStream = new FileInputStream(pathsFile);
-			Writer checksumWriter = new PrintWriter(outputFilePath, ENCODING))
+			Writer hashInfoWriter = new PrintWriter(outputFilePath, ENCODING))
 		{
-			Walk.walk(pathsInputStream, checksumWriter, ENCODING);
+			Walk.walk(pathsInputStream, hashInfoWriter, ENCODING);
 		} catch(IOException e) {
 			LOG.log(Level.SEVERE, e.getMessage(), e);
 			System.exit(1);
-		}*/
+		}
 		
-		System.out.println(new MD5LowMemoryHasher()
-								.processByte((byte)0x6D)
-								.processByte((byte)0x64)
-								.processByte((byte)0x35)
-								.finish());
+		LOG.finest("Done.");
 	}
 }

@@ -121,6 +121,7 @@ public final class ArraySet<T> extends ArrayList<T> implements NavigableSet<T> {
 
 	@Override
 	public T ceiling(T e) {
+		int position = getPosition(e);
 		// TODO
 		return null;
 	}
@@ -145,8 +146,14 @@ public final class ArraySet<T> extends ArrayList<T> implements NavigableSet<T> {
 
 	@Override
 	public NavigableSet<T> descendingSet() {
-		// TODO
-		return null;
+		Comparator<? super T> reversingComparator =
+				(comparator != null) ?
+						Collections.reverseOrder(comparator) :
+						Collections.<T>reverseOrder();
+		NavigableSet<T> descendingSet = new ArraySet<>(size(), reversingComparator);
+		descendingSet.addAll(this);
+		
+		return descendingSet;
 	}
 
 	@Override
@@ -157,60 +164,72 @@ public final class ArraySet<T> extends ArrayList<T> implements NavigableSet<T> {
 
 	@Override
 	public SortedSet<T> headSet(T toElement) {
+		int position = getPosition(toElement);
 		// TODO
 		return null;
 	}
 
 	@Override
 	public NavigableSet<T> headSet(T toElement, boolean inclusive) {
+		int position = getPosition(toElement);
 		// TODO
 		return null;
 	}
 
 	@Override
 	public T higher(T e) {
+		int position = getPosition(e);
 		// TODO
 		return null;
 	}
 
 	@Override
 	public T lower(T e) {
+		int position = getPosition(e);
 		// TODO
 		return null;
 	}
 
 	@Override
 	public T pollFirst() {
-		// TODO
-		return null;
+		T val = super.get(0);
+		super.remove(0);
+		return val;
 	}
 
 	@Override
 	public T pollLast() {
-		// TODO
-		return null;
+		T val = super.get(size() - 1);
+		super.remove(size() - 1);
+		return val;
 	}
 
 	@Override
 	public SortedSet<T> subSet(T fromElement, T toElement) {
+		int positionFrom = getPosition(fromElement),
+				positionTo = getPosition(toElement);
 		// TODO
 		return null;
 	}
 
 	@Override
 	public NavigableSet<T> subSet(T fromElement, boolean fromInclusive, T toElement, boolean toInclusive) {
+		int positionFrom = getPosition(fromElement),
+				positionTo = getPosition(toElement);
 		// TODO
 		return null;
 	}
 
 	@Override
 	public SortedSet<T> tailSet(T fromElement) {
+		int position = getPosition(fromElement);
 		// TODO
 		return null;
 	}
 
 	@Override
 	public NavigableSet<T> tailSet(T fromElement, boolean inclusive) {
+		int position = getPosition(fromElement);
 		// TODO
 		return null;
 	}

@@ -9,6 +9,8 @@ import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import ru.ifmo.ctddev.pistyulga.hash.LowMemHasher;
+import ru.ifmo.ctddev.pistyulga.hash.MD5LowMemHasher;
 import ru.ifmo.ctddev.pistyulga.log.LogService;
 
 public class WalkMain {
@@ -37,13 +39,14 @@ public class WalkMain {
 		}
 		
 		LOG.info("Processing file list...");
+		LowMemHasher hasher = new MD5LowMemHasher();
 		
 		try(InputStream pathsInputStream = new FileInputStream(pathsFile);
 			Writer hashInfoWriter = new PrintWriter(outputFilePath, ENCODING))
 		{
-			Walk.walk(pathsInputStream, hashInfoWriter, ENCODING);
+			Walk.walk(hasher, pathsInputStream, hashInfoWriter, ENCODING);
 		} catch(IOException e) {
-			LOG.log(Level.SEVERE, e.getMessage(), e);
+			LOG.log(Level.SEVERE,"I/O error while reading file paths: " + e.getMessage(), e);
 			System.exit(1);
 		}
 		

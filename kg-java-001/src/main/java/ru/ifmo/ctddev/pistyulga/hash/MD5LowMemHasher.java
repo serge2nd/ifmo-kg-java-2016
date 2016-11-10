@@ -2,7 +2,7 @@ package ru.ifmo.ctddev.pistyulga.hash;
 
 import java.util.Arrays;
 
-public class MD5LowMemoryHasher implements LowMemoryHasher {
+public class MD5LowMemHasher implements LowMemHasher {
 	private static final String EMPTY_HASH_STR = "00000000000000000000000000000000";
 	
 	public static final String getEmptyHashStr() {
@@ -30,42 +30,6 @@ public class MD5LowMemoryHasher implements LowMemoryHasher {
 			0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1, 0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 	};
 	
-	private static int F(int x, int y, int z) {
-		return (x & y) | (~x & z);
-	}
-	
-	private static int G(int x, int y, int z) {
-		return (x & z) | (~z & y);
-	}
-	
-	private static int H(int x, int y, int z) {
-		return x ^ y ^ z;
-	}
-	
-	private static int I(int x, int y, int z) {
-		return y ^ (~z | x);
-	}
-	
-	private static int oneRoundF(int a, int b, int c, int d, int x, int t, int s) {
-		int y = a + F(b, c, d) + x + t;
-		return b + ((y << s) | (y >>> (32 - s)));
-	}
-	
-	private static int oneRoundG(int a, int b, int c, int d, int x, int t, int s) {
-		int y = a + G(b, c, d) + x + t;
-		return b + ((y << s) | (y >>> (32 - s)));
-	}
-	
-	private static int oneRoundH(int a, int b, int c, int d, int x, int t, int s) {
-		int y = a + H(b, c, d) + x + t;
-		return b + ((y << s) | (y >>> (32 - s)));
-	}
-	
-	private static int oneRoundI(int a, int b, int c, int d, int x, int t, int s) {
-		int y = a + I(b, c, d) + x + t;
-		return b + ((y << s) | (y >>> (32 - s)));
-	}
-	
 	private int[] buf = { A, B, C, D };
 	private int[] words = { 0, 0, 0, 0,
 							0, 0, 0, 0,
@@ -76,20 +40,20 @@ public class MD5LowMemoryHasher implements LowMemoryHasher {
 	private boolean isFinished;
 	
 	@Override
-	public LowMemoryHasher processByte(byte b) {
+	public LowMemHasher appendByte(int b) {
 		if (isFinished) {
 			clear();
 		}
 		
 		int iBytesCount = (int)bytesCounter;
-		int x = (int)b & 0xFF;
+		b &= 0xFF;
 		
 		int wordNum = (iBytesCount & 0x3F) >>> 2;
 		
 		if ((iBytesCount & 3) == 0) {
 			words[wordNum] = 0;
 		}
-		words[wordNum] |= (x << ((iBytesCount & 3) << 3));
+		words[wordNum] |= (b << ((iBytesCount & 3) << 3));
 		
 		if ((++iBytesCount & 0x3F) == 0) {
 			processBlock();
@@ -100,13 +64,13 @@ public class MD5LowMemoryHasher implements LowMemoryHasher {
 	}
 	
 	@Override
-	public LowMemoryHasher clear() {
+	public LowMemHasher clear() {
 		buf[0] = A; buf[1] = B; buf[2] = C; buf[3] = D;
 		bytesCounter = 0; isFinished = false;
 		return this;
 	}
 	
-	public int[] toIntArray() throws IllegalStateException {
+	public int[] toIntArray() {
 		if (!isFinished) {
 			throw new IllegalStateException("You must call finish() at first!");
 		}
@@ -116,7 +80,7 @@ public class MD5LowMemoryHasher implements LowMemoryHasher {
 		return result;
 	}
 	
-	public byte[] toByteArray() throws IllegalStateException {
+	public byte[] toByteArray() {
 		if (!isFinished) {
 			throw new IllegalStateException("You must call finish() at first!");
 		}
@@ -133,25 +97,33 @@ public class MD5LowMemoryHasher implements LowMemoryHasher {
 	}
 	
 	@Override
-	public String toString() throws IllegalStateException {
+	public String toString() {
 		if (!isFinished) {
 			throw new IllegalStateException("You must call finish() at first!");
 		}
 		
-		StringBuilder result = new StringBuilder();
+		StringBuilder result = new StringBuilder(buf.length * 8);
+		
 		for(int i = 0; i < buf.length; i++) {
-			result.append(Integer.toHexString(
+			String intFrameStr =
+					Integer.toHexString(
 					   		 (buf[i] >>> 24) |
 					   		((buf[i] >>> 8) & 0x00FF00) |
 					   		((buf[i] << 8) & 0xFF0000) |
-					   		 (buf[i] << 24)));
+					   		 (buf[i] << 24));
+			int leadingZerosCount = Integer.SIZE/4 - intFrameStr.length();
+			
+			while (leadingZerosCount-- > 0) {
+				result.append('0');
+			}
+			result.append(intFrameStr);
 		}
 		
 		return result.toString();
 	}
 	
 	@Override
-	public LowMemoryHasher finish() {
+	public LowMemHasher finish() {
 		if (isFinished) {
 			return this;
 		}
@@ -161,14 +133,14 @@ public class MD5LowMemoryHasher implements LowMemoryHasher {
 		int paddingBytesCount =
 				(bytesModulo64 < 56) ? (56 - bytesModulo64) : (120 - bytesModulo64);
 				
-		processByte((byte)0x80); paddingBytesCount--;
+		appendByte(0x80); paddingBytesCount--;
 		for(int i = 0; i < paddingBytesCount; i++) {
-			processByte((byte)0);
+			appendByte(0);
 		}
 		
 		long bitsCount = beforePaddingBytesCount * 8;
 		for (int k = 0; k < 64; k += 8) {
-			processByte((byte)(bitsCount >>> k));
+			appendByte((int)(bitsCount >>> k));
 		}
 		
 		isFinished = true;
@@ -264,5 +236,41 @@ public class MD5LowMemoryHasher implements LowMemoryHasher {
 		b = oneRoundI(b, c, d, a, words[9],  T[63], S[15]);
 		
 		buf[0] += a; buf[1] += b; buf[2] += c; buf[3] += d;
+	}
+	
+	private static int F(int x, int y, int z) {
+		return (x & y) | (~x & z);
+	}
+	
+	private static int G(int x, int y, int z) {
+		return (x & z) | (~z & y);
+	}
+	
+	private static int H(int x, int y, int z) {
+		return x ^ y ^ z;
+	}
+	
+	private static int I(int x, int y, int z) {
+		return y ^ (~z | x);
+	}
+	
+	private static int oneRoundF(int a, int b, int c, int d, int x, int t, int s) {
+		int y = a + F(b, c, d) + x + t;
+		return b + ((y << s) | (y >>> (32 - s)));
+	}
+	
+	private static int oneRoundG(int a, int b, int c, int d, int x, int t, int s) {
+		int y = a + G(b, c, d) + x + t;
+		return b + ((y << s) | (y >>> (32 - s)));
+	}
+	
+	private static int oneRoundH(int a, int b, int c, int d, int x, int t, int s) {
+		int y = a + H(b, c, d) + x + t;
+		return b + ((y << s) | (y >>> (32 - s)));
+	}
+	
+	private static int oneRoundI(int a, int b, int c, int d, int x, int t, int s) {
+		int y = a + I(b, c, d) + x + t;
+		return b + ((y << s) | (y >>> (32 - s)));
 	}
 }

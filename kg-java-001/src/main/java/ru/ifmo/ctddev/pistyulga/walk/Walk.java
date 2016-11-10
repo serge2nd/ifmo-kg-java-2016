@@ -2,59 +2,108 @@ package ru.ifmo.ctddev.pistyulga.walk;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Writer;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import ru.ifmo.ctddev.pistyulga.hash.LowMemoryHasher;
-import ru.ifmo.ctddev.pistyulga.hash.MD5LowMemoryHasher;
+import ru.ifmo.ctddev.pistyulga.hash.HashUtil;
+import ru.ifmo.ctddev.pistyulga.hash.LowMemHasher;
+import ru.ifmo.ctddev.pistyulga.hash.MD5LowMemHasher;
 import ru.ifmo.ctddev.pistyulga.log.LogService;
 
-class Walk {
+public class Walk {
 	private static final Logger LOG = LogService.getLogger();
 	
-	public static void walk(InputStream pathsInputStream, Writer hashInfoWriter, String encoding)
+	private Walk() {}
+	
+	public static void walk(
+			LowMemHasher hasher, InputStream pathsInputStream,
+			Writer hashInfoWriter, String encoding)
 			throws IOException
 	{
-		byte[] buf = new byte[1];
-		LowMemoryHasher hasher = new MD5LowMemoryHasher();
-		
 		try(BufferedReader pathsReader =
 				new BufferedReader(new InputStreamReader(pathsInputStream, encoding)))
 		{
 			String filePath;
 			while ((filePath = pathsReader.readLine()) != null) {
-				filePath = filePath.trim();
-				
-				if (filePath.length() > 0) {
-					String hashStr = MD5LowMemoryHasher.getEmptyHashStr();
-					long startTime = System.currentTimeMillis();
-					
-					LOG.info("Reading " + filePath);
-					
-					try(BufferedInputStream fileInputStream =
-							new BufferedInputStream(new FileInputStream(filePath)))
-					{
-						while (fileInputStream.read(buf) != -1) {
-							hasher.processByte(buf[0]);
-						}
-						hashStr = hasher.finish().toString();
-						
-						String elapsedTime = String.format("%.3f", (System.currentTimeMillis() - startTime)/1000.0);
-						LOG.fine("Hash is calculated for " + elapsedTime + "s");
-					} catch (IOException e) {
-						LOG.log(Level.WARNING, "Reading error", e);
-					}
-					
-					hashInfoWriter.write(hashStr.toUpperCase() + " " + filePath + "\n");
+				String hashStr = getFileHash(hasher, filePath, hashInfoWriter);
+				if (hashStr != null) {
+					writeHashInfo(filePath, hashStr, hashInfoWriter);
 				}
 			}
 		} catch(IOException e) {
 			throw e;
 		}
+	}
+	
+	public static String getFileHash(LowMemHasher hasher, String filePath, Writer hashInfoWriter) {
+		filePath = filePath.trim();
+		
+		if (filePath.length() > 0) {
+			String hashStr = MD5LowMemHasher.getEmptyHashStr();
+			long startTime = System.nanoTime();
+			
+			File file = new File(filePath);
+			if (file.isDirectory()) {
+				Path path = Paths.get(filePath);
+				
+				try(DirectoryStream<Path> dirStream = Files.newDirectoryStream(path))
+				{
+					walk(hasher, dirStream, hashInfoWriter);
+				} catch (IOException | SecurityException e) {
+					LOG.log(Level.WARNING, "Cannot read dir " + file.getPath(), e);
+					return hashStr;
+				}
+				
+				return null;
+			}
+			
+			LOG.info("Reading " + filePath);
+			
+			try(BufferedInputStream fileInputStream =
+					new BufferedInputStream(new FileInputStream(file)))
+			{
+				hashStr = HashUtil.fromStream(hasher, fileInputStream)
+						.finish().toString();
+				
+				String elapsedTime = String.format("%.3f", (System.nanoTime() - startTime)/1.0e9);
+				LOG.fine("Hash is calculated for " + elapsedTime + "s");
+			} catch (IOException e) {
+				LOG.log(Level.WARNING, "I/O error: " + filePath, e);
+			}
+			
+			return hashStr;
+		}
+		
+		return null;
+	}
+	
+	private static void walk(LowMemHasher hasher, DirectoryStream<Path> directoryStream, Writer hashInfoWriter)
+			throws IOException
+	{
+		for (Path path : directoryStream) {
+			String hashStr = getFileHash(hasher, path.toString(), hashInfoWriter);
+			if (hashStr != null) {
+				writeHashInfo(path.toString(), hashStr, hashInfoWriter);
+			}
+		}
+	}
+	
+	private static void writeHashInfo(String filePath, String hashStr, Writer hashInfoWriter)
+			throws IOException
+	{
+		hashInfoWriter.write(hashStr.toUpperCase());
+		hashInfoWriter.write(" ");
+		hashInfoWriter.write(filePath);
+		hashInfoWriter.write("\n");
 	}
 }

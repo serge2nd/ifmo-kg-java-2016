@@ -29,6 +29,7 @@ public class WalkMain {
 
 	public static void main(String[] args) {
 		checkArgs(args);
+		
 		String pathsFilePath = args[0],
 				outputFilePath = args[1];
 		

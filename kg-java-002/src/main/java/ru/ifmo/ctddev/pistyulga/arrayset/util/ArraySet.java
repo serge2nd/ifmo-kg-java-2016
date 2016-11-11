@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NavigableSet;
+import java.util.NoSuchElementException;
 import java.util.SortedSet;
 
 public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
@@ -21,8 +22,17 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		this.comparator = null;
 	}
 	
+	public ArraySet(SortedSet<T> sortedSet) {
+		this(sortedSet, sortedSet.comparator());
+	}
+	
 	public ArraySet(Collection<? extends T> inputCollection) {
-		this();
+		this(inputCollection, null);
+	}
+	
+	public ArraySet(Collection<? extends T> inputCollection, Comparator<? super T> comparator) {
+		this.arrayList = new ArrayList<>();
+		this.comparator = comparator;
 		addAll(inputCollection);
 	}
 	
@@ -40,12 +50,8 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		this.comparator = comparator;
 	}
 	
-	public ArraySet(SortedSet<T> sortedSet) {
-		this(sortedSet.comparator());
-		addAll(sortedSet);
-	}
-	
-	ArraySet(List<T> arrayList, Comparator<? super T> comparator) {
+	// This constructor is used internally
+	ArraySet(List<T> arrayList, Comparator<? super T> comparator, int dummy) {
 		this.arrayList = arrayList;
 		this.comparator = comparator;
 	}
@@ -59,6 +65,16 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		int position = getPosition(val);
 		
 		return insertAt(position, val);
+	}
+	
+	@Override
+	public boolean addAll(Collection<? extends T> c) {
+		boolean changed = false;
+		for (T e : c) {
+			changed |= this.add(e);
+		}
+		
+		return changed;
 	}
 	
 	@Override
@@ -92,7 +108,7 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		} else {
 			@SuppressWarnings("unchecked")
 			List<? extends Comparable<? super T>> comparableList =
-										(List<? extends Comparable<? super T>>) arrayList;
+							(List<? extends Comparable<? super T>>) arrayList;
 			position = Collections.binarySearch(comparableList, val);
 		}
 		return position;
@@ -110,117 +126,126 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		return -position - 1;
 	}
 	
+	// *** Simple "one-row" methods ***
 	@Override
-	public void clear() {
-		arrayList.clear();
-	}
+	public T pollFirst() { return this.isEmpty() ? null : arrayList.remove(0); }
+
+	@Override
+	public T pollLast() { return this.isEmpty() ? null : arrayList.remove(size() - 1); }
 	
 	@Override
-	public boolean isEmpty() {
-		return arrayList.isEmpty();
-	}
+	public int size() { return arrayList.size(); }
 	
 	@Override
-	public final Comparator<? super T> comparator() {
-		return comparator;
-	}
+	public void clear() { arrayList.clear(); }
 	
 	@Override
-	public Iterator<T> iterator() {
-		return arrayList.iterator();
-	}
+	public boolean isEmpty() { return arrayList.isEmpty(); }
+	
+	@Override
+	public final Comparator<? super T> comparator() { return comparator; }
+	
+	@Override
+	public Iterator<T> iterator() { return arrayList.iterator(); }
 
 	@Override
 	public T first() {
+		if (arrayList.isEmpty()) {
+			throw new NoSuchElementException("Set is empty");
+		}
 		return arrayList.get(0);
 	}
 
 	@Override
 	public T last() {
+		if (arrayList.isEmpty()) {
+			throw new NoSuchElementException("Set is empty");
+		}
 		return arrayList.get(size() - 1);
 	}
 	
 	@Override
-	public T ceiling(T e) {
-		int position = getPosition(e);
-		if (position >= 0) {
-			return arrayList.get(position);
-		}
-		
-		return getHigher(position);
-	}
+	public T ceiling(T e) { return get(indexOfCeiling(e)); }
 
 	@Override
-	public T floor(T e) {
-		int position = getPosition(e);
-		if (position >= 0) {
-			return arrayList.get(position);
-		}
-		
-		return getLower(position);
-	}
+	public T floor(T e) { return get(indexOfFloor(e)); }
 
 	@Override
-	public T higher(T e) {
-		int position = getPosition(e);
-		if (position >= 0) {
-			return (position < size() - 1) ? arrayList.get(position + 1) : null;
-		}
-		
-		return getHigher(position);
-	}
+	public T higher(T e) { return get(indexOfHigher(e)); }
 
 	@Override
-	public T lower(T e) {
-		int position = getPosition(e);
-		if (position >= 0) {
-			return (position > 0) ? arrayList.get(position - 1) : null;
-		}
-		
-		return getLower(position);
+	public T lower(T e) { return get(indexOfLower(e)); }
+	
+	@Override
+	public Object[] toArray() { return arrayList.toArray(); }
+	
+	@Override
+	public <U> U[] toArray(U[] a) { return arrayList.toArray(a); }
+	
+	// *** Utility methods ***
+	final T get(int i) {
+		return (i >= 0) ? arrayList.get(i) : null;
 	}
 	
-	private T getHigher(int position) {
+	final int indexOfCeiling(T e) {
+		int position = getPosition(e);
+		if (position >= 0) {
+			return position;
+		}
+		
+		return getHigherIndex(position);
+	}
+	
+	final int indexOfFloor(T e) {
+		int position = getPosition(e);
+		if (position >= 0) {
+			return position;
+		}
+		
+		return getLowerIndex(position);
+	}
+	
+	final int indexOfHigher(T e) {
+		int position = getPosition(e);
+		if (position >= 0) {
+			return (position < arrayList.size() - 1) ? (position + 1) : -1;
+		}
+		
+		return getHigherIndex(position);
+	}
+	
+	final int indexOfLower(T e) {
+		int position = getPosition(e);
+		if (position >= 0) {
+			return (position > 0) ? (position - 1) : -1;
+		}
+		
+		return getLowerIndex(position);
+	}
+	
+	private int getHigherIndex(int position) {
 		position = decodeInsPos(position);
-		if (position == size()) {
-			return null;
+		if (position == arrayList.size()) {
+			return -1;
 		}
 		
-		return arrayList.get(position);
+		return position;
 	}
 	
-	private T getLower(int position) {
+	private int getLowerIndex(int position) {
 		position = decodeInsPos(position);
 		if (position == 0) {
-			return null;
+			return -1;
 		}
 		
-		return arrayList.get(position - 1);
-	}
-
-	@Override
-	public T pollFirst() {
-		T val = arrayList.get(0);
-		arrayList.remove(0);
-		return val;
-	}
-
-	@Override
-	public T pollLast() {
-		T val = arrayList.get(size() - 1);
-		arrayList.remove(size() - 1);
-		return val;
+		return position - 1;
 	}
 	
-	@Override
-	public final int size() {
-		return arrayList.size();
-	}
-	
+	// *** "Complex" methods ***
 	@Override
 	public Iterator<T> descendingIterator() {
 		return new Iterator<T>() {
-			private ListIterator<T> backingIterator = arrayList.listIterator(size());
+			private ListIterator<T> backingIterator = arrayList.listIterator(arrayList.size());
 			
 			@Override
 			public boolean hasNext() {
@@ -240,7 +265,11 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		return new DescendingArraySubSet<T>(arrayList, null, null,
 				comparator, true, true, true, true);
 	}
-
+	
+	/**
+	 * Equivalent to {@link #subSet(Object, boolean, Object, boolean) subSet(fromElement, true, toElement, false)}
+	 * that may be overridden
+	 */
 	@Override
 	public SortedSet<T> subSet(T fromElement, T toElement) {
 		return this.subSet(fromElement, true, toElement, false);
@@ -253,8 +282,11 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 				false, false, fromInclusive, toInclusive);
 	}
 	
+	/**
+	 * Equivalent to {@link #headSet(Object, boolean) subSet(toElement, false)} that may be overridden
+	 */
 	@Override
-	public SortedSet<T> headSet(T toElement) {
+	public final SortedSet<T> headSet(T toElement) {
 		return this.headSet(toElement, false);
 	}
 
@@ -263,9 +295,12 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		return new AscendingArraySubSet<T>(arrayList, null, toElement, comparator,
 				true, false, true, inclusive);
 	}
-
+	
+	/**
+	 * Equivalent to {@link #tailSet(Object, boolean) subSet(fromElement, true)} that may be overridden
+	 */
 	@Override
-	public SortedSet<T> tailSet(T fromElement) {
+	public final SortedSet<T> tailSet(T fromElement) {
 		return this.tailSet(fromElement, true);
 	}
 

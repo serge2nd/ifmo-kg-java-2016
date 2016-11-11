@@ -2,6 +2,9 @@ package ru.ifmo.ctddev.pistyulga.hash;
 
 import java.util.Arrays;
 
+/**
+ * @see <a href="http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-1a">FNV-1a Hash</a>
+ */
 public class FNV1ALowMemHasher implements LowMemHasher {
 	public static enum Size {
 		_32BIT(0), _64BIT(1), _128BIT(2), _256BIT(3), _512BIT(4), _1024BIT(5);
@@ -127,6 +130,9 @@ public class FNV1ALowMemHasher implements LowMemHasher {
 		return this;
 	}
 	
+	/**
+	 * @throws IllegalStateException - if {@code finish()} was not called before
+	 */
 	@Override
 	public String toString() {
 		if (!isFinished) {

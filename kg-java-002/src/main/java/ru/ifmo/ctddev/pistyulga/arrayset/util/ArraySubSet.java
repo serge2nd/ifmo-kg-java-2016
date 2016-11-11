@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 
 abstract class ArraySubSet<T> extends ArraySet<T> {
@@ -12,27 +13,57 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 	final boolean fromStart, toEnd;
 	final boolean fromInclusive, toInclusive;
 	
-	private int compare(T e1, T e2, Comparator<? super T> comp) {
+	/**
+	 * TODO
+	 * @param e1
+	 * @param e2
+	 * @param comp
+	 * @return
+	 * @throws ClassCastException
+	 */
+	private static <U> int compare(U e1, U e2, Comparator<? super U> comp) {
 		if (comp != null) {
 			return comp.compare(e1, e2);
 		}
 		
+		// Small trick to permit nulls
+		if (e1 == null) {
+			if (e2 == null) {
+				return 0;
+			}
+			U t = e1; e1 = e2; e2 = t;
+		}
+		
 		@SuppressWarnings("unchecked")
-		Comparable<? super T> comparableElem1 = (Comparable<? super T>) e1;
+		Comparable<? super U> comparableElem1 = (Comparable<? super U>) e1;
 		
 		return comparableElem1.compareTo(e2);
 	}
 	
+	/**
+	 * 
+	 * @param backingList
+	 * @param fromElem
+	 * @param toElem
+	 * @param comp
+	 * @param fromStart
+	 * @param toEnd
+	 * @param fromInclusive
+	 * @param toInclusive
+	 * @throws ClassCastException
+	 * @throws IllegalArgumentException
+	 */
 	public ArraySubSet(List<T> backingList, T fromElem, T toElem, Comparator<? super T> comp,
 			boolean fromStart, boolean toEnd, boolean fromInclusive, boolean toInclusive)
 	{
-		super(backingList, comp);
+		super(backingList, comp, 0);
 		
 		if (!fromStart && !toEnd) {
 			if (compare(fromElem, toElem, comp) > 0) {
 				throw new IllegalArgumentException("fromElement > toElement");
 			}
 		} else {
+			// Type check
 			if (!fromStart) {
 				compare(fromElem, fromElem, comp);
 			}
@@ -46,6 +77,7 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 		this.fromInclusive = fromInclusive; this.toInclusive = toInclusive;
 	}
 	
+	// *** Utility methods for checking range ***
 	final boolean tooLow(T e) {
         if (!fromStart) {
             int c = compare(e, fromElem, comparator());
@@ -67,14 +99,49 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
     final boolean inRange(T e) {
         return !tooLow(e) && !tooHigh(e);
     }
-
-    final boolean inClosedRange(T e) {
-        return (fromStart || compare(e, fromElem, comparator()) >= 0) &&
-        		(toEnd || compare(toElem, e, comparator()) >= 0);
+    
+    // *** Methods which implementation depends on ascending/descending order ***
+    public abstract Iterator<T> iterator();
+    public abstract Iterator<T> descendingIterator();
+    public abstract T first();
+    public abstract T last();
+    public abstract T pollFirst();
+    public abstract T pollLast();
+    public abstract T ceiling(T e);
+    public abstract T floor(T e);
+    public abstract T higher(T e);
+    public abstract T lower(T e);
+    public abstract NavigableSet<T> descendingSet();
+    /* Cannot make these methods abstract because AscendingArraySubSet needs access to super.subSet(), etc.
+    public abstract NavigableSet<T> subSet(T fromElement, boolean fromInclusive, T toElement, boolean toInclusive);
+    public abstract NavigableSet<T> headSet(T toElement, boolean inclusive);
+    public abstract NavigableSet<T> tailSet(T fromElement, boolean inclusive);
+    */
+    
+    // *** Common methods ***
+    @Override
+    public boolean isEmpty() {
+    	return this.size() == 0;
     }
-
-    final boolean inRange(T e, boolean inclusive) {
-        return inclusive ? inRange(e) : inClosedRange(e);
+    
+    @Override
+    public int size() {
+    	if (fromStart && toEnd) {
+    		return super.size();
+    	}
+    	
+    	int start = 0, end = super.size() - 1;
+    	if (!fromStart) {
+    		start = absIndexOfFirst();
+    		if (start < 0) {
+    			return 0;
+    		}
+    	}
+    	if (!toEnd) {
+    		end = absIndexOfLast();
+    	}
+    	
+    	return end - start + 1;
     }
     
     @Override
@@ -123,36 +190,111 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
     	return changed;
     }
     
-    final T absFirst() {
-    	T val = fromStart ? super.first() :
-    			(fromInclusive ? super.ceiling(fromElem) : super.higher(fromElem));
-    	return (val == null || tooHigh(val)) ? null : val;
-    }
-    
-    final T absLast() {
-    	T val = toEnd ? super.last() :
-    			(toInclusive ? super.floor(toElem) : super.lower(toElem));
-    	return (val == null || tooLow(val)) ? null : val;
-    }
-    
-    final T absCeiling(T e) {
+    @Override
+    public boolean retainAll(Collection<?> c) {
     	// TODO
-    	return null;
+    	throw new UnsupportedOperationException();
     }
     
-    final T absFloor(T e) {
-    	// TODO
-    	return null;
+    @Override
+    public Object[] toArray() {
+    	return this.toArray(null);
     }
     
-    final T absHigher(T e) {
-    	// TODO
-    	return null;
+    @Override
+    public <U> U[] toArray(U[] a) {
+    	Object[] buf = a;
+    	int size = this.size();
+    	if (a == null || size > a.length)
+    		buf = new Object[size];
+    	
+    	int i = 0;
+    	for (Iterator<T> it = this.iterator(); it.hasNext(); i++) {
+    		buf[i] = it.next();
+    	}
+    	
+    	@SuppressWarnings("unchecked")
+    	U[] result = (U[]) buf;
+    	return result;
     }
     
-    final T absLower(T e) {
-    	// TODO
-    	return null;
+    // *** Utilities which used in subclasses ***
+    final int absIndexOfFirst() {
+    	int i = fromStart ? ((super.size() > 0) ? 0 : -1) :
+    			(fromInclusive ? super.indexOfCeiling(fromElem) : super.indexOfHigher(fromElem));
+    	if (i < 0) {
+    		return -1;
+    	}
+    	
+    	T val = get(i);
+    	return tooHigh(val) ? -1 : i;
+    }
+    
+    final int absIndexOfLast() {
+    	int i = toEnd ? (super.size() - 1) :
+    			(toInclusive ? super.indexOfFloor(toElem) : super.indexOfLower(toElem));
+    	if (i < 0) {
+    		return -1;
+    	}
+    	
+    	T val = get(i);
+    	return tooLow(val) ? -1 : i;
+    }
+    
+    final int absIndexOfCeiling(T e) {
+    	if (tooLow(e)) {
+    		return absIndexOfFirst();
+    	}
+    	
+    	int i = super.indexOfCeiling(e);
+    	if (i < 0) {
+    		return -1;
+    	}
+    	
+    	T val = get(i);
+    	return tooHigh(val) ? -1 : i;
+    }
+    
+    final int absIndexOfFloor(T e) {
+    	if (tooHigh(e)) {
+    		return absIndexOfLast();
+    	}
+    	
+    	int i = super.indexOfFloor(e);
+    	if (i < 0) {
+    		return -1;
+    	}
+    	
+    	T val = get(i);
+    	return tooLow(val) ? -1 : i;
+    }
+    
+    final int absIndexOfHigher(T e) {
+    	if (tooLow(e)) {
+    		return absIndexOfFirst();
+    	}
+    	
+    	int i = super.indexOfHigher(e);
+    	if (i < 0) {
+    		return -1;
+    	}
+    	
+    	T val = get(i);
+    	return tooHigh(val) ? -1 : i;
+    }
+    
+    final int absIndexOfLower(T e) {
+    	if (tooHigh(e)) {
+    		return absIndexOfLast();
+    	}
+    	
+    	int i = super.indexOfLower(e);
+    	if (i < 0) {
+    		return -1;
+    	}
+    	
+    	T val = get(i);
+    	return tooLow(val) ? -1 : i;
     }
     
     final Iterator<T> absAscIterator() {
@@ -165,7 +307,6 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 
 			@Override
 			public T next() {
-				// TODO Auto-generated method stub
 				return backingIterator.next();
 			}
     	};
@@ -181,18 +322,17 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 
 			@Override
 			public T next() {
-				// TODO Auto-generated method stub
 				return backingIterator.previous();
 			}
     	};
     }
     
     private ListIterator<T> listIterator(boolean fromEnd) {
-    	final T first = absFirst(), last = absLast();
+    	final int start = absIndexOfFirst(), end = absIndexOfLast();
     	return new ListIterator<T>() {
-    		private ListIterator<T> backingIterator = arrayList.listIterator(
-    				fromEnd ? ((last != null) ? getPosition(last) : null) :
-    						((first == null) ? getPosition(first) : null));
+    		private ListIterator<T> backingIterator =
+    				fromEnd ? ((end >= 0) ? arrayList.listIterator(end + 1) : null) :
+    						((start >= 0) ? arrayList.listIterator(start) : null);
     		
 			@Override
 			public boolean hasNext() {
@@ -201,12 +341,10 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 				}
 				
 				T val = backingIterator.next();
-				if (tooHigh(val)) {
-					return false;
-				}
+				boolean hasNext = !tooHigh(val);
 				
 				backingIterator.previous();
-				return true;
+				return hasNext;
 			}
 
 			@Override
@@ -214,14 +352,12 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 				if (backingIterator == null || !backingIterator.hasPrevious()) {
 					return false;
 				}
-				
+
 				T val = backingIterator.previous();
-				if (tooLow(val)) {
-					return false;
-				}
+				boolean hasPrevious = !tooLow(val);
 				
 				backingIterator.next();
-				return true;
+				return hasPrevious;
 			}
 
 			@Override
@@ -242,6 +378,7 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 				return backingIterator.previous();
 			}
 			
+			// Unused methods
 			public int nextIndex() { return 0; }
 			public int previousIndex() { return 0; }
 			public void add(T e) {}

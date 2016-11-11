@@ -25,6 +25,15 @@ public class Walk {
 	
 	private Walk() {}
 	
+	/**
+	 * Reads file paths from {@code pathsInputStream} and writes file hashes to {@code hashInfoWriter}.
+	 * If given file is a directory, all files and directories in it are being considered recursively.
+	 * @param hasher - an implementation of hash algorithm
+	 * @param pathsInputStream - a stream containing file paths
+	 * @param hashInfoWriter - a destination of hash info
+	 * @param encoding - a charset name in which file paths are read
+	 * @throws IOException - when I/O error occurred while reading file path or writing hash info
+	 */
 	public static void walk(
 			LowMemHasher hasher, InputStream pathsInputStream,
 			Writer hashInfoWriter, String encoding)
@@ -72,8 +81,8 @@ public class Walk {
 			try(BufferedInputStream fileInputStream =
 					new BufferedInputStream(new FileInputStream(file)))
 			{
-				hashStr = HashUtil.fromStream(hasher, fileInputStream)
-						.finish().toString();
+				hashStr = HashUtil.fromStream(hasher.clear(), fileInputStream)
+							.finish().toString();
 				
 				String elapsedTime = String.format("%.3f", (System.nanoTime() - startTime)/1.0e9);
 				LOG.fine("Hash is calculated for " + elapsedTime + "s");

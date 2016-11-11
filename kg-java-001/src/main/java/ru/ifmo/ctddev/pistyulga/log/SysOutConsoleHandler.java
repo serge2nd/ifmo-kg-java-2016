@@ -11,8 +11,9 @@ public class SysOutConsoleHandler extends StreamHandler {
 		super.setFilter(new Filter() {
 			@Override
 			public boolean isLoggable(LogRecord record) {
-				return record.getLevel() != Level.SEVERE &&
-						record.getLevel() != Level.WARNING;
+				return false;
+				//return record.getLevel() != Level.SEVERE &&
+				//		record.getLevel() != Level.WARNING;
 			}
 		});
 	}

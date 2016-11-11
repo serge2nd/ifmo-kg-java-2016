@@ -2,6 +2,9 @@ package ru.ifmo.ctddev.pistyulga.hash;
 
 import java.util.Arrays;
 
+/**
+ * @see <a href="https://en.wikipedia.org/wiki/MD5">MD5 (en.wikipedia.org)</a>
+ */
 public class MD5LowMemHasher implements LowMemHasher {
 	private static final String EMPTY_HASH_STR = "00000000000000000000000000000000";
 	
@@ -9,6 +12,7 @@ public class MD5LowMemHasher implements LowMemHasher {
 		return EMPTY_HASH_STR;
 	}
 	
+	// Initial value
 	private static final int A = 0x67452301,
 							 B = 0xEFCDAB89,
 							 C = 0x98BADCFE,
@@ -30,6 +34,7 @@ public class MD5LowMemHasher implements LowMemHasher {
 			0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1, 0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 	};
 	
+	// Destination buf
 	private int[] buf = { A, B, C, D };
 	private int[] words = { 0, 0, 0, 0,
 							0, 0, 0, 0,
@@ -70,6 +75,9 @@ public class MD5LowMemHasher implements LowMemHasher {
 		return this;
 	}
 	
+	/**
+	 * @throws IllegalStateException - if {@code finish()} was not called before
+	 */
 	public int[] toIntArray() {
 		if (!isFinished) {
 			throw new IllegalStateException("You must call finish() at first!");
@@ -80,6 +88,9 @@ public class MD5LowMemHasher implements LowMemHasher {
 		return result;
 	}
 	
+	/**
+	 * @throws IllegalStateException - if {@code finish()} was not called before
+	 */
 	public byte[] toByteArray() {
 		if (!isFinished) {
 			throw new IllegalStateException("You must call finish() at first!");
@@ -96,6 +107,9 @@ public class MD5LowMemHasher implements LowMemHasher {
 		return result;
 	}
 	
+	/**
+	 * @throws IllegalStateException - if {@code finish()} was not called before
+	 */
 	@Override
 	public String toString() {
 		if (!isFinished) {
@@ -105,6 +119,8 @@ public class MD5LowMemHasher implements LowMemHasher {
 		StringBuilder result = new StringBuilder(buf.length * 8);
 		
 		for(int i = 0; i < buf.length; i++) {
+			
+			// Producing the little-endian value
 			String intFrameStr =
 					Integer.toHexString(
 					   		 (buf[i] >>> 24) |
@@ -128,16 +144,19 @@ public class MD5LowMemHasher implements LowMemHasher {
 			return this;
 		}
 		
+		// Padding the length of data up to 64 bits fewer
+		// than a multiple of 512 with bits 1 0 0 0 0 0 ... 0
 		long beforePaddingBytesCount = bytesCounter;
 		int bytesModulo64 = ((int)bytesCounter) & 0x3F;
 		int paddingBytesCount =
 				(bytesModulo64 < 56) ? (56 - bytesModulo64) : (120 - bytesModulo64);
-				
+		
 		appendByte(0x80); paddingBytesCount--;
 		for(int i = 0; i < paddingBytesCount; i++) {
 			appendByte(0);
 		}
 		
+		// Writing data length in bits to end
 		long bitsCount = beforePaddingBytesCount * 8;
 		for (int k = 0; k < 64; k += 8) {
 			appendByte((int)(bitsCount >>> k));
@@ -148,6 +167,9 @@ public class MD5LowMemHasher implements LowMemHasher {
 		return this;
 	}
 	
+	/**
+	 * Modifies the state with the next accumulated 512-bit block
+	 */
 	private void processBlock() {
 		int a = buf[0], b = buf[1], c = buf[2], d = buf[3];
 		

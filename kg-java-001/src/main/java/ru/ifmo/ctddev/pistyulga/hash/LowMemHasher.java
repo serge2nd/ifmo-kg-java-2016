@@ -3,8 +3,9 @@ package ru.ifmo.ctddev.pistyulga.hash;
 public interface LowMemHasher {
 	
 	/**
+	 * Updates hash of the sequence with given new byte
 	 * If finish() was called before, clear() is called at first if was not
-	 * @param bytes
+	 * @param b - the next byte of data
 	 * @return This hasher impl
 	 */
 	LowMemHasher appendByte(int b);

@@ -11,7 +11,16 @@ public class SmallFormatter extends Formatter {
 	
 	@Override
 	public String format(LogRecord record) {
-		return dateFormat.format(new Date()) + " " +
-				record.getLevel() + ": " + record.getMessage() + '\n';
+		StringBuilder messageBuilder = new StringBuilder();
+		messageBuilder.append(dateFormat.format(new Date()));
+		messageBuilder.append(' ');
+		messageBuilder.append(record.getSourceClassName());
+		messageBuilder.append(' ');
+		messageBuilder.append(record.getLevel().toString());
+		messageBuilder.append(": ");
+		messageBuilder.append(record.getMessage());
+		messageBuilder.append('\n');
+		
+		return messageBuilder.toString();
 	}
 }

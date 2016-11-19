@@ -18,6 +18,7 @@ public class MD5LowMemHasher implements LowMemHasher {
 							 C = 0x98BADCFE,
 							 D = 0x10325476;
 	
+	// Magic constants
 	private static final byte[] S = { 7, 12, 17, 22,
 									  5,  9, 14, 20,
 									  4, 11, 16, 23,
@@ -71,12 +72,12 @@ public class MD5LowMemHasher implements LowMemHasher {
 	@Override
 	public LowMemHasher clear() {
 		buf[0] = A; buf[1] = B; buf[2] = C; buf[3] = D;
-		bytesCounter = 0; isFinished = false;
+		bytesCounter = 0L; isFinished = false;
 		return this;
 	}
 	
 	/**
-	 * @throws IllegalStateException - if {@code finish()} was not called before
+	 * @throws IllegalStateException - if {@link #finish()} was not called before
 	 */
 	public int[] toIntArray() {
 		if (!isFinished) {
@@ -89,7 +90,7 @@ public class MD5LowMemHasher implements LowMemHasher {
 	}
 	
 	/**
-	 * @throws IllegalStateException - if {@code finish()} was not called before
+	 * @throws IllegalStateException - if {@link #finish()} was not called before
 	 */
 	public byte[] toByteArray() {
 		if (!isFinished) {
@@ -108,7 +109,7 @@ public class MD5LowMemHasher implements LowMemHasher {
 	}
 	
 	/**
-	 * @throws IllegalStateException - if {@code finish()} was not called before
+	 * @throws IllegalStateException - if {@link #finish()} was not called before
 	 */
 	@Override
 	public String toString() {
@@ -260,6 +261,7 @@ public class MD5LowMemHasher implements LowMemHasher {
 		buf[0] += a; buf[1] += b; buf[2] += c; buf[3] += d;
 	}
 	
+	// Magic functions
 	private static int F(int x, int y, int z) {
 		return (x & y) | (~x & z);
 	}

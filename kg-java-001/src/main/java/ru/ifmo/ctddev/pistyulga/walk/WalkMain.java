@@ -41,6 +41,7 @@ public class WalkMain {
 		
 		LOG.info("Processing file list...");
 		LowMemHasher hasher = new MD5LowMemHasher();
+								//new FNV1ALowMemHasher(Size._128BIT);
 		
 		try(InputStream pathsInputStream = new FileInputStream(pathsFile);
 			Writer hashInfoWriter = new PrintWriter(outputFilePath, ENCODING))

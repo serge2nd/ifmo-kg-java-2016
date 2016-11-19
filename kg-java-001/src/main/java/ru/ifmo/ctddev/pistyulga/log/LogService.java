@@ -9,6 +9,8 @@ public class LogService {
 	private static final String DEFAULT_LOGGER_NAME = "ru.ifmo.ctddev.pistyulga.walk.err";
 	private static boolean initCalled;
 	
+	private LogService() {}
+	
 	private static void init() {
 		if (!initCalled) {
 			Logger globalLogger = Logger.getGlobal();
@@ -24,6 +26,9 @@ public class LogService {
 	}
 	
 	public static Logger getLogger() {
+		if (!initCalled) {
+			init();
+		}
 		return getLogger(DEFAULT_LOGGER_NAME);
 	}
 	
@@ -33,6 +38,4 @@ public class LogService {
 		}
 		return Logger.getLogger(loggerName);
 	}
-	
-	private LogService() {}
 }

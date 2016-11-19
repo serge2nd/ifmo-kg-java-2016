@@ -9,9 +9,9 @@ import java.util.NoSuchElementException;
 final class DescendingArraySubSet<T> extends ArraySubSet<T> {
 
 	public DescendingArraySubSet(List<T> backingList, T fromElem, T toElem, Comparator<? super T> comp,
-			boolean fromStart, boolean toEnd, boolean fromInclusive, boolean toInclusive)
+			boolean fromStart, boolean toEnd, boolean fromInclusive, boolean toInclusive, boolean isImmutable)
 	{
-		super(backingList, fromElem, toElem, comp, fromStart, toEnd, fromInclusive, toInclusive);
+		super(backingList, fromElem, toElem, comp, fromStart, toEnd, fromInclusive, toInclusive, isImmutable);
 	}
 	
 	@Override
@@ -23,7 +23,7 @@ final class DescendingArraySubSet<T> extends ArraySubSet<T> {
 	@Override
 	public NavigableSet<T> descendingSet() {
 		return new AscendingArraySubSet<>(arrayList, fromElem, toElem,
-				comparator(), fromStart, toEnd, fromInclusive, toInclusive);
+				comparator(), fromStart, toEnd, fromInclusive, toInclusive, isImmutable);
 	}
 	
 	@Override
@@ -56,19 +56,32 @@ final class DescendingArraySubSet<T> extends ArraySubSet<T> {
 	
 	@Override
 	public NavigableSet<T> subSet(T fromElement, boolean fromInclusive, T toElement, boolean toInclusive) {
-		return new DescendingArraySubSet<>(arrayList, fromElement, toElement,
-				comparator(), false, false, fromInclusive, toInclusive);
+		if (!isCorrectBound(toElement, toInclusive, true))
+		{
+			throw new IllegalArgumentException("fromElement out of range");
+		}
+		if (!isCorrectBound(fromElement, fromInclusive, false)) {
+			throw new IllegalArgumentException("toElement out of range");
+		}
+		return new DescendingArraySubSet<>(arrayList, toElement, fromElement,
+				comparator(), false, false, toInclusive, fromInclusive, isImmutable);
 	}
 	
 	@Override
 	public NavigableSet<T> headSet(T toElement, boolean inclusive) {
-		return new DescendingArraySubSet<>(arrayList, null, toElement,
-				comparator(), true, false, true, inclusive);
+		if (!isCorrectBound(toElement, inclusive, true)) {
+			throw new IllegalArgumentException("toElement out of range");
+		}
+		return new DescendingArraySubSet<>(arrayList, toElement, this.toElem,
+				comparator(), false, this.toEnd, inclusive, this.toInclusive, isImmutable);
 	}
 	
 	@Override
 	public NavigableSet<T> tailSet(T fromElement, boolean inclusive) {
-		return new DescendingArraySubSet<>(arrayList, fromElement, null,
-				comparator(), false, true, inclusive, true);
+		if (!isCorrectBound(fromElement, inclusive, false)) {
+			throw new IllegalArgumentException("toElement out of range");
+		}
+		return new DescendingArraySubSet<>(arrayList, this.fromElem, fromElement,
+				comparator(), this.fromStart, false, this.fromInclusive, inclusive, isImmutable);
 	}
 }

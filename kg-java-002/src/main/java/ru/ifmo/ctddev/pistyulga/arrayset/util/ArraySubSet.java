@@ -50,13 +50,14 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 	 * @param toEnd
 	 * @param fromInclusive
 	 * @param toInclusive
+	 * @param isImmutable
 	 * @throws ClassCastException
 	 * @throws IllegalArgumentException
 	 */
 	public ArraySubSet(List<T> backingList, T fromElem, T toElem, Comparator<? super T> comp,
-			boolean fromStart, boolean toEnd, boolean fromInclusive, boolean toInclusive)
+			boolean fromStart, boolean toEnd, boolean fromInclusive, boolean toInclusive, boolean isImmutable)
 	{
-		super(backingList, comp, 0);
+		super(backingList, comp, isImmutable);
 		
 		if (!fromStart && !toEnd) {
 			if (compare(fromElem, toElem, comp) > 0) {
@@ -100,13 +101,17 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
         return !tooLow(e) && !tooHigh(e);
     }
     
+    final boolean isCorrectBound(T e, boolean inclusive, boolean left) {
+    	return inRange(e) || (!inclusive &&
+				ArraySubSet.compare(e,
+						left ? this.fromElem : this.toElem, comparator()) == 0);
+    }
+    
     // *** Methods which implementation depends on ascending/descending order ***
     public abstract Iterator<T> iterator();
     public abstract Iterator<T> descendingIterator();
     public abstract T first();
     public abstract T last();
-    public abstract T pollFirst();
-    public abstract T pollLast();
     public abstract T ceiling(T e);
     public abstract T floor(T e);
     public abstract T higher(T e);
@@ -142,6 +147,22 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
     	}
     	
     	return end - start + 1;
+    }
+    
+    @Override
+    public T pollFirst() {
+    	T val = this.first();
+    	this.remove(val);
+    	
+    	return val;
+    }
+    
+    @Override
+    public T pollLast() {
+    	T val = this.last();
+    	this.remove(val);
+    	
+    	return val;
     }
     
     @Override
@@ -192,8 +213,19 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
     
     @Override
     public boolean retainAll(Collection<?> c) {
-    	// TODO
-    	throw new UnsupportedOperationException();
+    	if (isImmutable) {
+    		throw new UnsupportedOperationException("Set is immutable");
+    	}
+    	
+    	boolean changed = false;
+    	for(int i = absIndexOfFirst(); i <= absIndexOfLast(); i++) {
+    		if (!c.contains(arrayList.get(i))) {
+    			arrayList.remove(i--);
+    			changed = true;
+    		}
+    	}
+    	
+    	return changed;
     }
     
     @Override
@@ -309,6 +341,14 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 			public T next() {
 				return backingIterator.next();
 			}
+			
+			@Override
+			public void remove() {
+				if (isImmutable) {
+		    		throw new UnsupportedOperationException("Set is immutable");
+		    	}
+				backingIterator.remove();
+			}
     	};
     }
     
@@ -323,6 +363,14 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 			@Override
 			public T next() {
 				return backingIterator.previous();
+			}
+			
+			@Override
+			public void remove() {
+				if (isImmutable) {
+		    		throw new UnsupportedOperationException("Set is immutable");
+		    	}
+				backingIterator.remove();
 			}
     	};
     }

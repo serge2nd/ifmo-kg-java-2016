@@ -16,10 +16,12 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	
 	protected final List<T> arrayList;
 	private final Comparator<? super T> comparator;
+	protected final boolean isImmutable;
 	
 	public ArraySet() {
 		this.arrayList = new ArrayList<>();
 		this.comparator = null;
+		this.isImmutable = false;
 	}
 	
 	public ArraySet(SortedSet<T> sortedSet) {
@@ -34,6 +36,7 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		this.arrayList = new ArrayList<>();
 		this.comparator = comparator;
 		addAll(inputCollection);
+		this.isImmutable = CollectionUtil.isImmutable(inputCollection);
 	}
 	
 	public ArraySet(int initialCapacity) {
@@ -43,21 +46,27 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	public ArraySet(Comparator<? super T> comparator) {
 		this.arrayList = new ArrayList<>();
 		this.comparator = comparator;
+		this.isImmutable = false;
 	}
 	
 	public ArraySet(int initialCapacity, Comparator<? super T> comparator) {
 		this.arrayList = new ArrayList<>(initialCapacity);
 		this.comparator = comparator;
+		this.isImmutable = false;
 	}
 	
 	// This constructor is used internally
-	ArraySet(List<T> arrayList, Comparator<? super T> comparator, int dummy) {
+	ArraySet(List<T> arrayList, Comparator<? super T> comparator, boolean isImmutable) {
 		this.arrayList = arrayList;
 		this.comparator = comparator;
+		this.isImmutable = isImmutable;
 	}
 	
 	@Override
 	public boolean add(T val) {
+		if (isImmutable) {
+			throw new UnsupportedOperationException("Set is immutable");
+		}
 		if (val == null) {
 			throw new NullPointerException();
 		}
@@ -79,6 +88,10 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	
 	@Override
 	public boolean remove(Object o) {
+		if (isImmutable) {
+			throw new UnsupportedOperationException("Set is immutable");
+		}
+		
 		@SuppressWarnings("unchecked")
 		T val = (T) o;
 		
@@ -89,6 +102,14 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		}
 		
 		return false;
+	}
+	
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		if (isImmutable) {
+    		throw new UnsupportedOperationException("Set is immutable");
+    	}
+		return super.retainAll(c);
 	}
 	
 	@Override
@@ -128,16 +149,32 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	
 	// *** Simple "one-row" methods ***
 	@Override
-	public T pollFirst() { return this.isEmpty() ? null : arrayList.remove(0); }
+	public T pollFirst() {
+		if (isImmutable) {
+			throw new UnsupportedOperationException("Set is immutable");
+		}
+		return this.isEmpty() ? null : arrayList.remove(0);
+	}
 
 	@Override
-	public T pollLast() { return this.isEmpty() ? null : arrayList.remove(size() - 1); }
+	public T pollLast() {
+		if (isImmutable) {
+			throw new UnsupportedOperationException("Set is immutable");
+		}
+		return this.isEmpty() ? null : arrayList.remove(size() - 1);
+	}
 	
 	@Override
 	public int size() { return arrayList.size(); }
 	
 	@Override
-	public void clear() { arrayList.clear(); }
+	public void clear() {
+		if (isImmutable) {
+			throw new UnsupportedOperationException("Set is immutable");
+		}
+		
+		arrayList.clear();
+	}
 	
 	@Override
 	public boolean isEmpty() { return arrayList.isEmpty(); }
@@ -146,7 +183,26 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	public final Comparator<? super T> comparator() { return comparator; }
 	
 	@Override
-	public Iterator<T> iterator() { return arrayList.iterator(); }
+	public Iterator<T> iterator() {
+		return new Iterator<T>() {
+			private Iterator<T> backingIterator = arrayList.iterator();
+			@Override
+			public boolean hasNext() {
+				return backingIterator.hasNext();
+			}
+			@Override
+			public T next() {
+				return backingIterator.next();
+			}
+			@Override
+			public void remove() {
+				if (isImmutable) {
+					throw new UnsupportedOperationException("Set is immutable");
+				}
+				backingIterator.remove();
+			}
+		};
+	}
 
 	@Override
 	public T first() {
@@ -257,13 +313,20 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 				return backingIterator.previous();
 			}
 			
+			@Override
+			public void remove() {
+				if (isImmutable) {
+					throw new UnsupportedOperationException("Set is immutable");
+				}
+				backingIterator.remove();
+			}
 		};
 	}
 
 	@Override
 	public NavigableSet<T> descendingSet() {
 		return new DescendingArraySubSet<T>(arrayList, null, null,
-				comparator, true, true, true, true);
+				comparator, true, true, true, true, isImmutable);
 	}
 	
 	/**
@@ -279,11 +342,11 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	public NavigableSet<T> subSet(final T fromElement, boolean fromInclusive, final T toElement, boolean toInclusive)
 	{
 		return new AscendingArraySubSet<T>(arrayList, fromElement, toElement, comparator,
-				false, false, fromInclusive, toInclusive);
+				false, false, fromInclusive, toInclusive, isImmutable);
 	}
 	
 	/**
-	 * Equivalent to {@link #headSet(Object, boolean) subSet(toElement, false)} that may be overridden
+	 * Equivalent to {@link #headSet(Object, boolean) headSet(toElement, false)} that may be overridden
 	 */
 	@Override
 	public final SortedSet<T> headSet(T toElement) {
@@ -293,11 +356,11 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	@Override
 	public NavigableSet<T> headSet(T toElement, boolean inclusive) {
 		return new AscendingArraySubSet<T>(arrayList, null, toElement, comparator,
-				true, false, true, inclusive);
+				true, false, true, inclusive, isImmutable);
 	}
 	
 	/**
-	 * Equivalent to {@link #tailSet(Object, boolean) subSet(fromElement, true)} that may be overridden
+	 * Equivalent to {@link #tailSet(Object, boolean) tailSet(fromElement, true)} that may be overridden
 	 */
 	@Override
 	public final SortedSet<T> tailSet(T fromElement) {
@@ -307,6 +370,6 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	@Override
 	public NavigableSet<T> tailSet(T fromElement, boolean inclusive) {
 		return new AscendingArraySubSet<T>(arrayList, fromElement, null, comparator,
-				false, true, inclusive, true);
+				false, true, inclusive, true, isImmutable);
 	}
 }

@@ -14,11 +14,6 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 	final boolean fromInclusive, toInclusive;
 	
 	/**
-	 * TODO
-	 * @param e1
-	 * @param e2
-	 * @param comp
-	 * @return
 	 * @throws ClassCastException
 	 */
 	private static <U> int compare(U e1, U e2, Comparator<? super U> comp) {
@@ -37,7 +32,7 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 		@SuppressWarnings("unchecked")
 		Comparable<? super U> comparableElem1 = (Comparable<? super U>) e1;
 		
-		return comparableElem1.compareTo(e2);
+		return comparableElem1.compareTo(e2) * ((e2 == null) ? -1 : 1);
 	}
 	
 	/**

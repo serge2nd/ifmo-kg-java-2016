@@ -14,9 +14,9 @@ import java.util.SortedSet;
 
 public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	
-	protected final List<T> arrayList;
 	private final Comparator<? super T> comparator;
-	protected final boolean isImmutable;
+	final List<T> arrayList;
+	final boolean isImmutable;
 	
 	public ArraySet() {
 		this.arrayList = new ArrayList<>();
@@ -66,9 +66,6 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	public boolean add(T val) {
 		if (isImmutable) {
 			throw new UnsupportedOperationException("Set is immutable");
-		}
-		if (val == null) {
-			throw new NullPointerException();
 		}
 		
 		int position = getPosition(val);
@@ -172,7 +169,6 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		if (isImmutable) {
 			throw new UnsupportedOperationException("Set is immutable");
 		}
-		
 		arrayList.clear();
 	}
 	
@@ -339,7 +335,7 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	}
 
 	@Override
-	public NavigableSet<T> subSet(final T fromElement, boolean fromInclusive, final T toElement, boolean toInclusive)
+	public NavigableSet<T> subSet(T fromElement, boolean fromInclusive, T toElement, boolean toInclusive)
 	{
 		return new AscendingArraySubSet<T>(arrayList, fromElement, toElement, comparator,
 				false, false, fromInclusive, toInclusive, isImmutable);

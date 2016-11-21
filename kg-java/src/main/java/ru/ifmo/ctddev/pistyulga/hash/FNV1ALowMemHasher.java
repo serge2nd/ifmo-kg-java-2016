@@ -131,7 +131,7 @@ public class FNV1ALowMemHasher implements LowMemHasher {
 	}
 	
 	/**
-	 * @throws IllegalStateException - if {@code finish()} was not called before
+	 * @throws IllegalStateException - if {@link #finish()} was not called before
 	 */
 	@Override
 	public String toString() {

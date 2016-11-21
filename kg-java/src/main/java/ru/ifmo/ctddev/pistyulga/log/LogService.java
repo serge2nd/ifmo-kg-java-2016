@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 public class LogService {
 	private static final String LOG_CONFIG_PATH = "logging.properties";
-	private static final String DEFAULT_LOGGER_NAME = "ru.ifmo.ctddev.pistyulga.walk.err";
+	private static final String DEFAULT_LOGGER_NAME = "ru.ifmo.ctddev.pistyulga.err";
 	private static boolean initCalled;
 	
 	private LogService() {}

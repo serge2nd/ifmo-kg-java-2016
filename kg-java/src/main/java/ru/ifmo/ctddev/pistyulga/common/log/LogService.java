@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.pistyulga.log;
+package ru.ifmo.ctddev.pistyulga.common.log;
 
 import java.util.logging.Level;
 import java.util.logging.LogManager;

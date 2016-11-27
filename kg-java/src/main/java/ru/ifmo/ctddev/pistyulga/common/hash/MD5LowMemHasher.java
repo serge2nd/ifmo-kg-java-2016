@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.pistyulga.hash;
+package ru.ifmo.ctddev.pistyulga.common.hash;
 
 import java.util.Arrays;
 

@@ -9,9 +9,9 @@ import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import ru.ifmo.ctddev.pistyulga.hash.LowMemHasher;
-import ru.ifmo.ctddev.pistyulga.hash.MD5LowMemHasher;
-import ru.ifmo.ctddev.pistyulga.log.LogService;
+import ru.ifmo.ctddev.pistyulga.common.hash.LowMemHasher;
+import ru.ifmo.ctddev.pistyulga.common.hash.MD5LowMemHasher;
+import ru.ifmo.ctddev.pistyulga.common.log.LogService;
 
 public class WalkMain {
 	private static final Logger LOG = LogService.getLogger();

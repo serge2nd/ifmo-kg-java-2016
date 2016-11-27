@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.pistyulga.log;
+package ru.ifmo.ctddev.pistyulga.common.log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

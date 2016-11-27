@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.pistyulga.hash;
+package ru.ifmo.ctddev.pistyulga.common.hash;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,7 +7,8 @@ public class HashUtil {
 	private HashUtil() {}
 	
 	/**
-	 * Processes the streaming data with given hasher
+	 * Processes the streaming data with given hasher.
+	 * Automatically closes the stream even when an error has occurred.
 	 * @param inputStream - a stream of data being hashed
 	 * @return Given hasher instance
 	 * @throws IOException
@@ -18,8 +19,6 @@ public class HashUtil {
 			while ((b = in.read()) != -1) {
 				hasher.appendByte(b);
 			}
-		} catch(IOException e) {
-			throw e;
 		}
 		
 		return hasher;

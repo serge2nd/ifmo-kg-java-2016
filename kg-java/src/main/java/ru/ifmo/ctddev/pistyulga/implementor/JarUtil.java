@@ -1,6 +1,7 @@
 package ru.ifmo.ctddev.pistyulga.implementor;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -29,15 +30,18 @@ public class JarUtil {
 	
 	public static void create(Path src, String packageName, String jarFileName, Manifest man) throws IOException {
 		
-		if (!SourceVersion.isName(packageName)) {
+		if (!packageName.isEmpty() && !SourceVersion.isName(packageName)) {
 			throw new IllegalArgumentException("Invalid package: " + packageName);
 		}
 		
-		Path packagePath = Paths.get(packageName.replace('.', '/')),
-				packageRealPath = src.resolve(packagePath);
+		Path packagePath = Paths.get(packageName.replace('.', File.separatorChar));
+		if (!packageName.isEmpty() && !src.endsWith(packagePath)) {
+			throw new IllegalArgumentException(
+					"Package " + packageName + " and source " + src + " are incompatible");
+		}
 		
 		try(JarOutputStream jarStream = new JarOutputStream(new FileOutputStream(jarFileName), man)) {
-			ZipUtil.addRecursively(packageRealPath, packagePath, jarStream);
+			ZipUtil.addRecursively(src, packagePath, jarStream);
 		}
 	}
 }

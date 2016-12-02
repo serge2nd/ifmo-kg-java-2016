@@ -8,13 +8,18 @@ import javax.lang.model.type.NoType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeVisitor;
 
+import ru.ifmo.ctddev.pistyulga.common.lang.util.ClassUtil;
+import ru.ifmo.ctddev.pistyulga.common.lang.util.StringPool;
+
 public final class NoTypeImpl extends AbstractType implements NoType {
 	public static final NoType
 		VOID = new NoTypeImpl(TypeKind.VOID, null),
-		JAVA_LANG = new NoTypeImpl(TypeKind.PACKAGE, "java.lang"),
-		NONE = new NoTypeImpl(TypeKind.NONE, null);
+		PACKAGE = new NoTypeImpl(TypeKind.PACKAGE, ClassUtil.toString(TypeKind.PACKAGE)),
+		NONE = new NoTypeImpl(TypeKind.NONE, null),
+		
+		JAVA_LANG = new NoTypeImpl(TypeKind.PACKAGE, StringPool.JAVA_LANG);
 	
-	private TypeKind kind;
+	/** Private constructor for this fixed object pool */
 	private NoTypeImpl(TypeKind kind, String name) { super(kind, name); }
 	
 	public static NoType getInstance(TypeKind kind) {
@@ -25,22 +30,11 @@ public final class NoTypeImpl extends AbstractType implements NoType {
 			return NONE;
 		}
 		if (kind == TypeKind.PACKAGE) {
-			return JAVA_LANG;
+			return PACKAGE;
 		}
 		
-		throw new IllegalArgumentException();
+		throw new IllegalArgumentException("Invalid kind of NoType: " + kind);
 	}
-	
-	public static NoType getInstance(String name) {
-		if (JAVA_LANG.toString().equals(name)) {
-			return JAVA_LANG;
-		}
-		
-		return new NoTypeImpl(TypeKind.PACKAGE, name);
-	}
-	
-	@Override
-	public TypeKind getKind() { return kind; }
 	
 	// **********************
 	// *** Unused methods ***

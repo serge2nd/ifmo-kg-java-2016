@@ -4,14 +4,15 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class HashUtil {
+	/** Private constructor for this static class */
 	private HashUtil() {}
 	
 	/**
-	 * Processes the streaming data with given hasher.
+	 * Processes the streaming data with the given hasher.
 	 * Automatically closes the stream even when an error has occurred.
 	 * @param inputStream - a stream of data being hashed
 	 * @return Given hasher instance
-	 * @throws IOException
+	 * @throws IOException if I/O error has occurred
 	 */
 	public static LowMemHasher fromStream(LowMemHasher hasher, InputStream inputStream) throws IOException {
 		try(InputStream in = inputStream) {

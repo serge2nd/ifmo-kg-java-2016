@@ -37,18 +37,45 @@ public class ClassUtil {
 		
 		switch(kind) {
 		case BOOLEAN:	return StringPool.BOOLEAN;
-		case CHAR:		return StringPool.BOOLEAN;
-		case BYTE:		return StringPool.BOOLEAN;
-		case SHORT:		return StringPool.BOOLEAN;
-		case INT:		return StringPool.BOOLEAN;
-		case LONG:		return StringPool.BOOLEAN;
-		case FLOAT:		return StringPool.BOOLEAN;
-		case DOUBLE:	return StringPool.BOOLEAN;
+		case CHAR:		return StringPool.CHAR;
+		case BYTE:		return StringPool.BYTE;
+		case SHORT:		return StringPool.SHORT;
+		case INT:		return StringPool.INT;
+		case LONG:		return StringPool.LONG;
+		case FLOAT:		return StringPool.FLOAT;
+		case DOUBLE:	return StringPool.DOUBLE;
 		case NULL:		return StringPool.NULL;
-		case PACKAGE:	return "package";
-		case NONE:		return "none";
+		case PACKAGE:	return StringPool.PACKAGE;
+		case NONE:		return StringPool.NONE;
 		default:		return kind.toString().toLowerCase();
 		}
+	}
+	
+	public static String getSimpleName(String fullName) {
+		int lastDelimIndex = fullName.lastIndexOf(NAME_SEPARATOR);
+		return (lastDelimIndex < 0) ? fullName :
+				fullName.substring(lastDelimIndex + 1);
+	}
+	
+	public static boolean isSameLocation(String fullName1, String fullName2) {
+		if (fullName1 == null || fullName2 == null) {
+			return false;
+		}
+		
+		int nameStart1 = fullName1.lastIndexOf(NAME_SEPARATOR),
+			nameStart2 = fullName2.lastIndexOf(NAME_SEPARATOR);
+		
+		if (nameStart1 != nameStart2) {
+			return false;
+		}
+		if (nameStart1 < 0) {
+			return true;
+		}
+		
+		String packageName1 = fullName1.substring(0, nameStart1),
+				packageName2 = fullName2.substring(0, nameStart2);
+		
+		return packageName1.equals(packageName2);
 	}
 	
 	public static TypeKind getTypeKind(String className) {
@@ -56,7 +83,7 @@ public class ClassUtil {
 			return TypeKind.NULL;
 		}
 		
-		if (className.endsWith("[]")) {
+		if (className.endsWith("[]") || className.startsWith("[")) {
 			return TypeKind.ARRAY;
 		}
 		
@@ -67,25 +94,25 @@ public class ClassUtil {
 			return TypeKind.CHAR;
 		}
 		if (StringPool.BYTE.equals(className)) {
-			return TypeKind.CHAR;
+			return TypeKind.BYTE;
 		}
 		if (StringPool.SHORT.equals(className)) {
-			return TypeKind.CHAR;
+			return TypeKind.SHORT;
 		}
 		if (StringPool.INT.equals(className)) {
-			return TypeKind.CHAR;
+			return TypeKind.INT;
 		}
 		if (StringPool.LONG.equals(className)) {
-			return TypeKind.CHAR;
+			return TypeKind.LONG;
 		}
 		if (StringPool.FLOAT.equals(className)) {
-			return TypeKind.CHAR;
+			return TypeKind.FLOAT;
 		}
 		if (StringPool.DOUBLE.equals(className)) {
-			return TypeKind.CHAR;
+			return TypeKind.DOUBLE;
 		}
 		if (StringPool.VOID.equals(className)) {
-			return TypeKind.CHAR;
+			return TypeKind.VOID;
 		}
 		if (StringPool.NULL.equals(className)) {
 			return TypeKind.NULL;
@@ -111,7 +138,7 @@ public class ClassUtil {
 		
 		int typeIndex = depth;
 		char type = typeName.charAt(typeIndex);
-		
+
 		switch(type) {
 		case BOOL:		result.append(StringPool.BOOLEAN); break;
 		case CHAR:		result.append(StringPool.CHAR); break;
@@ -145,13 +172,11 @@ public class ClassUtil {
 		return result.toString();
 	}
 	
-	public static String getVarArgsName(Class<?> clazz) {
-		String name = clazz.getName();
-		if (clazz.isArray()) {
-			String friendlyName = getArrayFriendlyClassName(name);
-			name = friendlyName.substring(0, friendlyName.length() - 2) + "...";
+	public static String getVarArgName(String typeName) {
+		if (typeName.endsWith("[]")) {
+			typeName = typeName.substring(0, typeName.length() - 2) + "...";
 		}
 		
-		return name;
+		return typeName;
 	}
 }

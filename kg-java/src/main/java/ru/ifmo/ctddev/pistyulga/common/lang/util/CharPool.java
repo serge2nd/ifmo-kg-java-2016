@@ -13,5 +13,6 @@ public class CharPool {
 		LONG   = 'J',
 		FLOAT  = 'F',
 		DOUBLE = 'D',
-		CLASS  = 'L';
+		CLASS  = 'L',
+		NAME_SEPARATOR = '.';
 }

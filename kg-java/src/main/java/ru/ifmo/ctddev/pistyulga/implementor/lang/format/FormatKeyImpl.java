@@ -8,11 +8,11 @@ import ru.ifmo.ctddev.pistyulga.common.lang.format.FormatKey;
 public enum FormatKeyImpl implements FormatKey<FormatKeyImpl> {
 	CLASS(void.class, null),
 	METHOD(void.class, null),
-	PARAM(void.class, null),
+	IMPORTS(void.class, null),
 	
 	PAD(LinePad.class, LinePad.NO),
 	
-	ISVARARGS(Boolean.class, false);
+	BODY(String.class, "");
 	
 	private final Class<?> clazz;
 	private final Object defaultValue;
@@ -26,8 +26,12 @@ public enum FormatKeyImpl implements FormatKey<FormatKeyImpl> {
 	public <T> T cast(Object val) { return (T)clazz.cast((val != null) ? val : defaultValue);}
 
 	@Override
-	public <T> T get(EnumMap<FormatKeyImpl, Object> params) {
+	public <T> T from(EnumMap<FormatKeyImpl, Object> params) {
 		return this.cast(params.get(this));
 	}
 	
+	@Override
+	public void to(EnumMap<FormatKeyImpl, Object> params, Object val) {
+		params.put(this, this.cast(val));
+	}
 }

@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.pistyulga.common.lang.builder;
+package ru.ifmo.ctddev.pistyulga.implementor.lang.builder;
 
 import java.lang.annotation.Annotation;
 

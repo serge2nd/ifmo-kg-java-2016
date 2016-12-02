@@ -23,7 +23,7 @@ public class WalkMain {
 		final String USAGE = "Usage: <program> <file_list_path> <output_file>";
 		if (args.length != N_ARGS) {
 			System.out.println(USAGE);
-			System.exit(1);
+			System.exit(0);
 		}
 	}
 

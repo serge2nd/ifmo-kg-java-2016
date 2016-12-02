@@ -30,7 +30,7 @@ public abstract class AbstractType implements TypeMirror {
 			
 			this.name = friendlyName;
 		} else if (kind == TypeKind.DECLARED || kind == TypeKind.PACKAGE) {
-			if (!SourceVersion.isName(name)) {
+			if (name == null || (kind == TypeKind.DECLARED && !SourceVersion.isName(name))) {
 				throw new IllegalArgumentException("Incorrect name: " + name);
 			}
 			

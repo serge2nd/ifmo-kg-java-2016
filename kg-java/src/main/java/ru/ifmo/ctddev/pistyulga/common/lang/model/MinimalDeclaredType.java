@@ -1,5 +1,7 @@
 package ru.ifmo.ctddev.pistyulga.common.lang.model;
 
+import static ru.ifmo.ctddev.pistyulga.common.lang.util.CharPool.NAME_SEPARATOR;
+
 import java.lang.annotation.Annotation;
 import java.util.List;
 
@@ -10,43 +12,53 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVisitor;
 
+import ru.ifmo.ctddev.pistyulga.common.lang.util.StringPool;
+
 public final class MinimalDeclaredType extends AbstractType implements DeclaredType {
 	
 	private final TypeMirror enclosingType;
 	
+	/** Frequently used type */
 	public final static DeclaredType
-		OBJECT = new MinimalDeclaredType("Object", NoTypeImpl.JAVA_LANG),
-		STRING = new MinimalDeclaredType("String", NoTypeImpl.JAVA_LANG);
+		OBJECT = new MinimalDeclaredType("java.lang.Object", NoTypeImpl.JAVA_LANG),
+		STRING = new MinimalDeclaredType("java.lang.String", NoTypeImpl.JAVA_LANG);
 	
+	/**
+	 * Private constructor because {@link #newInstance(String)} is used
+	 * @param name
+	 * @param enclosingType
+	 */
 	private MinimalDeclaredType(String name, TypeMirror enclosingType) {
 		super(TypeKind.DECLARED, name);
-		if (enclosingType.getKind() != TypeKind.PACKAGE) {
-			throw new UnsupportedOperationException("Only the package enclosing type is supported currently");
-		}
 		
 		this.enclosingType = enclosingType;
 	}
 	
-	public static DeclaredType getInstance(String name, TypeMirror enclosingType) {
-		if (enclosingType.getKind() != TypeKind.PACKAGE) {
-			throw new UnsupportedOperationException("Only the package enclosing type is supported currently");
-		}
-		
-		if (OBJECT.toString().equals(name)) {
+	public static DeclaredType newInstance(String fullName) {
+		if (OBJECT.toString().equals(fullName)) {
 			return OBJECT;
 		}
-		if (STRING.toString().equals(name)) {
+		if (STRING.toString().equals(fullName)) {
 			return STRING;
 		}
 		
-		return new MinimalDeclaredType(name, enclosingType);
+		int lastDelimIndex = fullName.lastIndexOf(NAME_SEPARATOR);
+		if (lastDelimIndex == 0 || lastDelimIndex == fullName.length() - 1) {
+			throw new IllegalArgumentException("Incorrect class name: " + fullName);
+		}
+		
+		if (lastDelimIndex < 0) {
+			return new MinimalDeclaredType(fullName, NoTypeImpl.PACKAGE);
+		}
+		
+		String enclosingName = fullName.substring(0, lastDelimIndex);
+		
+		return new MinimalDeclaredType(fullName, StringPool.JAVA_LANG.equals(enclosingName) ?
+				NoTypeImpl.JAVA_LANG : NoTypeImpl.PACKAGE);
 	}
 	
 	@Override
 	public TypeMirror getEnclosingType() { return enclosingType; }
-	
-	@Override
-	public String toString() { return enclosingType.toString() + "." + super.toString(); }
 	
 	// **********************
 	// *** Unused methods ***

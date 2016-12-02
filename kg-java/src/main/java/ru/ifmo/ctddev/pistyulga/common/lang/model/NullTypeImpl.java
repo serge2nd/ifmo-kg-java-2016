@@ -12,6 +12,7 @@ public final class NullTypeImpl extends AbstractType implements NullType {
 	
 	private static final NullType instance = new NullTypeImpl();
 	
+	/** Private constructor for this singleton */
 	private NullTypeImpl() { super(TypeKind.NULL, null); }
 	
 	public static NullType getInstance() { return instance; }

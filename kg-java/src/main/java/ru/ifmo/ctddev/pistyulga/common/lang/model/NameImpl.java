@@ -28,6 +28,10 @@ public final class NameImpl implements Name {
 	
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		
 		return obj instanceof NameImpl && this.contentEquals((NameImpl)obj);
 	}
 	

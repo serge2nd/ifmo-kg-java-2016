@@ -20,7 +20,7 @@ public final class PrimitiveTypeImpl extends AbstractType implements PrimitiveTy
 		FLOAT 	= new PrimitiveTypeImpl(TypeKind.FLOAT),
 		DOUBLE 	= new PrimitiveTypeImpl(TypeKind.DOUBLE);
 		
-	
+	/** Private constructor for this fixed object pool */
 	private PrimitiveTypeImpl(TypeKind kind) { super(kind, null); }
 	
 	public static PrimitiveType getInstance(TypeKind kind) {

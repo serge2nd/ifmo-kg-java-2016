@@ -4,35 +4,21 @@ import java.lang.annotation.Annotation;
 import java.util.List;
 
 import javax.lang.model.element.AnnotationMirror;
-import javax.lang.model.type.ArrayType;
-import javax.lang.model.type.TypeKind;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ElementVisitor;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.type.TypeVisitor;
 
-import ru.ifmo.ctddev.pistyulga.common.lang.model.AbstractType;
-import ru.ifmo.ctddev.pistyulga.common.lang.util.ClassUtil;
-import ru.ifmo.ctddev.pistyulga.implementor.lang.util.TypeUtil;
+import ru.ifmo.ctddev.pistyulga.common.lang.model.AbstractVariable;
 
-public final class ArrayTypeImpl extends AbstractType implements ArrayType {
-	
-	private final String friendlyName;
-	private final TypeMirror componentType;
-	
-	public ArrayTypeImpl(String name) {
-		super(TypeKind.ARRAY, name);
+public final class SimpleParameterDescriptor extends AbstractVariable {
 
-		String friendlyName = super.toString(),
-				componentName = friendlyName.substring(0, friendlyName.indexOf('['));
-		
-		this.friendlyName = friendlyName;
-		this.componentType = TypeUtil.getType(ClassUtil.getTypeKind(componentName), componentName);
+	public SimpleParameterDescriptor(TypeMirror type, String nameStr) {
+		super(type, nameStr);
 	}
 	
 	@Override
-	public TypeMirror getComponentType() { return componentType; }
-	
-	@Override
-	public String toString() { return friendlyName; }
+	public ElementKind getKind() { return ElementKind.PARAMETER; }
 	
 	// **********************
 	// *** Unused methods ***
@@ -66,7 +52,15 @@ public final class ArrayTypeImpl extends AbstractType implements ArrayType {
 	 * @throws UnsupportedOperationException
 	 */
 	@Override
-	public <R, P> R accept(TypeVisitor<R, P> v, P p) {
+	public <R, P> R accept(ElementVisitor<R, P> v, P p) {
+		throw new UnsupportedOperationException();
+	}
+	/**
+	 * Throws {@link UnsupportedOperationException}
+	 * @throws UnsupportedOperationException
+	 */
+	@Override
+	public Element getEnclosingElement() {
 		throw new UnsupportedOperationException();
 	}
 }

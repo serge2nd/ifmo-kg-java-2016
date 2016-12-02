@@ -14,5 +14,9 @@ public class StringPool {
 		FLOAT	=	float.class.getName(),
 		DOUBLE	=	double.class.getName(),
 		VOID	=	void.class.getName(),
-		NULL	=	String.valueOf((Object)null);
+		NULL	=	String.valueOf((Object)null),
+		
+		PACKAGE =	"package",
+		JAVA_LANG = "java.lang",
+		NONE	=	"none";
 }

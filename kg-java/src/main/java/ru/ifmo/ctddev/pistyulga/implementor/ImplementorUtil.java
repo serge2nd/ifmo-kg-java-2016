@@ -90,7 +90,7 @@ public class ImplementorUtil {
 		MethodBuilder methodBuilder =
 				new MethodBuilder(method.getName(), method.getReturnType(), Modifier.PUBLIC);
 		
-		return addThrownAndArgs(method, methodBuilder)
+		return addThrownAndArgs(method, methodBuilder.addAnnotation(Override.class))
 				.setBody(getMethodBody(method))
 				.build();
 	}
@@ -153,6 +153,9 @@ public class ImplementorUtil {
 	
 	private static String getMethodBody(Method m) {
 		Class<?> returnType = m.getReturnType();
+		if (returnType == void.class) {
+			return "";
+		}
 		
 		return "return" +
 					((returnType == boolean.class) ?

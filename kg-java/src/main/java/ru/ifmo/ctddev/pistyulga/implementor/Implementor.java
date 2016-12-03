@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.EnumMap;
 
@@ -44,11 +45,15 @@ public class Implementor implements Impler, JarImpler {
 		}
 		
 		// Class name & destination file path
-		String className = token.getSimpleName() + "Impl";
-		Path compilationUnitPath = packagePath.resolve(className + ".java");
+		String classSimpleName = token.getSimpleName() + "Impl",
+				className = token.getName() + "Impl";
+		Path compilationUnitPath = packagePath.resolve(classSimpleName + ".java");
+		
+		// Create class builder
+		ClassBuilder classBuilder =
+				new ClassBuilder(className, Modifier.PUBLIC);
 		
 		// Superclass or interface & constructor
-		ClassBuilder classBuilder = new ClassBuilder(className, Modifier.PUBLIC);
 		if (token.isInterface()) {
 			classBuilder.addInterface(token);
 		} else {
@@ -70,6 +75,15 @@ public class Implementor implements Impler, JarImpler {
 		@SuppressWarnings("unchecked")
 		ElementFormatter<FormatKeyImpl> formatter = (ElementFormatter<FormatKeyImpl>)
 					formatterFactory.getFormatter(FormatKeyImpl.CLASS);
+		
+		// Create package hierarchy if not exists
+		if (Files.notExists(packagePath)) {
+			try {
+				Files.createDirectories(packagePath);
+			} catch (IOException e) {
+				throw new ImplerException(e);
+			}
+		}
 		
 		// Write *.java
 		try (Writer writer = new PrintWriter(compilationUnitPath.toString())) {

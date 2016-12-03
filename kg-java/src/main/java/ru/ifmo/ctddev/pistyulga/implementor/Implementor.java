@@ -81,7 +81,7 @@ public class Implementor implements Impler, JarImpler {
 			try {
 				Files.createDirectories(packagePath);
 			} catch (IOException e) {
-				throw new ImplerException(e);
+				throw new ImplerException("Cannot create " + packagePath, e);
 			}
 		}
 		
@@ -93,14 +93,13 @@ public class Implementor implements Impler, JarImpler {
 			
 			formatter.format(result, writer, new EnumMap<>(FormatKeyImpl.class));
 		} catch (IOException e) {
-			throw new ImplerException(e);
+			throw new ImplerException("Cannot write " + compilationUnitPath, e);
 		}
 	}
 
 	@Override
 	public void implementJar(Class<?> token, Path root) throws ImplerException {
-		// TODO Auto-generated method stub
-		
+		// TODO
 	}
 
 }

@@ -86,23 +86,6 @@ public class ImplementorUtil {
 		}
 	}
 	
-	public static ExecutableElement buildMethodElement(Method method) {
-		MethodBuilder methodBuilder =
-				new MethodBuilder(method.getName(), method.getReturnType(), Modifier.PUBLIC);
-		
-		return addThrownAndArgs(method, methodBuilder.addAnnotation(Override.class))
-				.setBody(getMethodBody(method))
-				.build();
-	}
-	
-	public static ExecutableElement buildConstructorElement(Constructor<?> c) {
-		ConstructorBuilder cBuilder = new ConstructorBuilder(Modifier.PUBLIC);
-		
-		return addThrownAndArgs(c, cBuilder)
-				.setBody(getConstructorBody(c))
-				.build();
-	}
-	
 	private static Method searchMethod(Method method, List<Class<?>> subClasses) {
 		String methodName = method.getName();
 		Class<?>[] paramTypes = method.getParameterTypes();
@@ -120,6 +103,23 @@ public class ImplementorUtil {
 		}
 		
 		return targetMethod;
+	}
+	
+	public static ExecutableElement buildMethodElement(Method method) {
+		MethodBuilder methodBuilder =
+				new MethodBuilder(method.getName(), method.getReturnType(), Modifier.PUBLIC);
+		
+		return addThrownAndArgs(method, methodBuilder.addAnnotation(Override.class))
+				.setBody(getMethodBody(method))
+				.build();
+	}
+	
+	public static ExecutableElement buildConstructorElement(Constructor<?> c) {
+		ConstructorBuilder cBuilder = new ConstructorBuilder(Modifier.PUBLIC);
+		
+		return addThrownAndArgs(c, cBuilder)
+				.setBody(getConstructorBody(c))
+				.build();
 	}
 	
 	private static ExecutableBuilder addThrownAndArgs(Executable executable, ExecutableBuilder b) {

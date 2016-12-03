@@ -17,6 +17,7 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 
 import ru.ifmo.ctddev.pistyulga.common.format.LinePad;
@@ -108,15 +109,21 @@ public class FormatterFactoryImpl implements FormatterFactory<FormatKeyImpl> {
 	private static TypeMirror resolveType(TypeMirror type, SortedSet<String> imports)
 			throws IOException
 	{
-		if (imports == null || !(type instanceof DeclaredType)) {
+		if (imports == null || (!(type instanceof DeclaredType) && !(type instanceof ArrayType))) {
 			return type;
 		}
 		
-		DeclaredType declaredType = (DeclaredType) type;
-		if (declaredType.getEnclosingType() != NoTypeImpl.JAVA_LANG) {
-			String fullName = type.toString();
-			if (!imports.contains(fullName)) {
-				imports.add(fullName);
+		if (type.getKind() == TypeKind.ARRAY) {
+			type = ((ArrayType)type).getComponentType();
+		}
+		
+		if (type.getKind() == TypeKind.DECLARED) {
+			DeclaredType declaredType = (DeclaredType) type;
+			if (declaredType.getEnclosingType() != NoTypeImpl.JAVA_LANG) {
+				String fullName = type.toString();
+				if (!imports.contains(fullName)) {
+					imports.add(fullName);
+				}
 			}
 		}
 		

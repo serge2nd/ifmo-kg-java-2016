@@ -27,7 +27,7 @@ public final class MethodBuilder extends AbstractExecutableBuilder {
 	@Override
 	public ExecutableElement build() {
 		return new SimpleMethodDescriptor(
-				nameStr, mods, returnType, annotations, parameters, thrownTypes, isVarArgs);
+				nameStr, mods, returnType, annotations, parameters, thrownTypes, isVarArgs, body);
 	}
 
 }

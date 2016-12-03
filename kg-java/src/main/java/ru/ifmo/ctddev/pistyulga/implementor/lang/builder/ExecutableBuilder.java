@@ -11,4 +11,5 @@ public interface ExecutableBuilder extends Builder<ExecutableElement> {
 	ExecutableBuilder addParameter(Class<?> paramClass, String name);
 	ExecutableBuilder addParameter(Class<?> paramClass, String name, boolean isVarArgs);
 	ExecutableBuilder addThrownType(Class<? extends Throwable> throwable);
+	ExecutableBuilder setBody(String body);
 }

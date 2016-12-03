@@ -16,8 +16,9 @@ import ru.ifmo.ctddev.pistyulga.common.lang.model.AbstractMethod;
 final class SimpleMethodDescriptor extends AbstractMethod {
 
 	public SimpleMethodDescriptor(String nameStr, int mods, TypeMirror returnType, List<AnnotationMirror> annotations,
-			List<VariableElement> parameters, List<DeclaredType> thrownTypes, boolean isVarArgs) {
-		super(nameStr, mods, returnType, annotations, parameters, thrownTypes, isVarArgs);
+			List<VariableElement> parameters, List<DeclaredType> thrownTypes, boolean isVarArgs, String body)
+	{
+		super(nameStr, mods, returnType, annotations, parameters, thrownTypes, isVarArgs, body);
 	}
 	
 	// **********************

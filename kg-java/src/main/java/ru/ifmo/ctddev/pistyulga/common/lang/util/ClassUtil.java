@@ -7,6 +7,7 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.type.TypeKind;
 
 import static ru.ifmo.ctddev.pistyulga.common.lang.util.CharPool.*;
+import static java.io.File.separatorChar;
 
 public class ClassUtil {
 	/** Private constructor for this static class */
@@ -27,7 +28,8 @@ public class ClassUtil {
 	}
 	
 	public static Path resolvePackagePath(Class<?> clazz, Path cp) {
-		return cp.resolve(clazz.getPackage().getName().replace('.', '/'));
+		return cp.resolve(clazz.getPackage()
+				.getName().replace(NAME_SEPARATOR, separatorChar));
 	}
 	
 	public static String toString(TypeKind kind) {
@@ -121,9 +123,9 @@ public class ClassUtil {
 		return TypeKind.DECLARED;
 	}
 	
-	public static String getArrayFriendlyClassName(String typeName) {
+	public static String getFriendlyName(String typeName) {
 		if (typeName == null || typeName.length() < 2 || typeName.charAt(0) != '[') {
-			return null;
+			return typeName;
 		}
 		
 		int depth = 1, strLen = typeName.length();
@@ -173,6 +175,18 @@ public class ClassUtil {
 	}
 	
 	public static String getVarArgName(String typeName) {
+		if (typeName == null || typeName.isEmpty()) {
+			return typeName;
+		}
+		
+		String oldTypeName = typeName;
+		if (typeName.charAt(0) == '[') {
+			typeName = getFriendlyName(typeName);
+		}
+		if (typeName == null) {
+			return oldTypeName;
+		}
+		
 		if (typeName.endsWith("[]")) {
 			typeName = typeName.substring(0, typeName.length() - 2) + "...";
 		}

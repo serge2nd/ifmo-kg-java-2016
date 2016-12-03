@@ -16,9 +16,9 @@ public abstract class AbstractConstructor extends AbstractExecutable {
 	private final Set<Modifier> modifiers;
 
 	public AbstractConstructor(int mods, List<AnnotationMirror> annotations, List<VariableElement> parameters,
-			List<DeclaredType> thrownTypes, boolean isVarArgs)
+			List<DeclaredType> thrownTypes, boolean isVarArgs, String body)
 	{
-		super(annotations, parameters, thrownTypes, isVarArgs);
+		super(annotations, parameters, thrownTypes, isVarArgs, body);
 
 		if (!ModifierUtil.isConstructorMods(mods)) {
 			throw new IllegalArgumentException("Not constructor modifiers: " + Integer.toHexString(mods));

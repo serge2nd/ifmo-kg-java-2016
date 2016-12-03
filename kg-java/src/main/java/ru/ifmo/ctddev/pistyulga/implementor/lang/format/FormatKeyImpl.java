@@ -10,9 +10,7 @@ public enum FormatKeyImpl implements FormatKey<FormatKeyImpl> {
 	METHOD(void.class, null),
 	IMPORTS(void.class, null),
 	
-	PAD(LinePad.class, LinePad.NO),
-	
-	BODY(String.class, "");
+	PAD(LinePad.class, LinePad.NO);
 	
 	private final Class<?> clazz;
 	private final Object defaultValue;

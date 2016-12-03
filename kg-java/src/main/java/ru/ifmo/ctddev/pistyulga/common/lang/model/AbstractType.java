@@ -23,8 +23,8 @@ public abstract class AbstractType implements TypeMirror {
 		{
 			this.name = ClassUtil.toString(kind);
 		} else if (kind == TypeKind.ARRAY) {
-			String friendlyName = ClassUtil.getArrayFriendlyClassName(name);
-			if (friendlyName == null) {
+			String friendlyName = ClassUtil.getFriendlyName(name);
+			if (friendlyName == null || friendlyName == name) {
 				throw new IllegalArgumentException("Incorrect array type name: " + name);
 			}
 			

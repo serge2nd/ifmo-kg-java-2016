@@ -23,9 +23,9 @@ public abstract class AbstractMethod extends AbstractExecutable {
 	private final TypeMirror returnType;
 
 	public AbstractMethod(String nameStr, int mods, TypeMirror returnType, List<AnnotationMirror> annotations,
-			List<VariableElement> parameters, List<DeclaredType> thrownTypes, boolean isVarArgs)
+			List<VariableElement> parameters, List<DeclaredType> thrownTypes, boolean isVarArgs, String body)
 	{
-		super(annotations, parameters, thrownTypes, isVarArgs);
+		super(annotations, parameters, thrownTypes, isVarArgs, body);
 		
 		if (!SourceVersion.isIdentifier(nameStr) || SourceVersion.isKeyword(nameStr)) {
 			throw new IllegalArgumentException("Invalid method name: " + nameStr);

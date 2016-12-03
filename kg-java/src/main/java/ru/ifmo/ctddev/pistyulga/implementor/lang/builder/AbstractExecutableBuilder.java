@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.AnnotationValue;
@@ -23,6 +24,7 @@ public abstract class AbstractExecutableBuilder implements ExecutableBuilder {
 	protected final List<VariableElement> parameters = new ArrayList<>();
 	protected final List<DeclaredType> thrownTypes = new ArrayList<>();
 	protected boolean isVarArgs = false;
+	protected String body = "";
 	
 	@Override
 	public ExecutableBuilder addAnnotation(Class<? extends Annotation> annClass) {
@@ -75,6 +77,12 @@ public abstract class AbstractExecutableBuilder implements ExecutableBuilder {
 	@Override
 	public ExecutableBuilder addThrownType(Class<? extends Throwable> throwable) {
 		thrownTypes.add(MinimalDeclaredType.newInstance(throwable.getName()));
+		return this;
+	}
+	
+	@Override
+	public ExecutableBuilder setBody(String body) {
+		this.body = Objects.requireNonNull(body, "body");
 		return this;
 	}
 }

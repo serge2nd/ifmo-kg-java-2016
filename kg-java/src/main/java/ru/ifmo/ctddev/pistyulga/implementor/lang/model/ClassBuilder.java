@@ -1,6 +1,5 @@
 package ru.ifmo.ctddev.pistyulga.implementor.lang.model;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +10,6 @@ import javax.lang.model.type.DeclaredType;
 
 import ru.ifmo.ctddev.pistyulga.common.builder.Builder;
 import ru.ifmo.ctddev.pistyulga.common.lang.model.MinimalDeclaredType;
-import ru.ifmo.ctddev.pistyulga.common.lang.util.ClassUtil;
 
 public final class ClassBuilder implements Builder<TypeElement> {
 	
@@ -27,9 +25,6 @@ public final class ClassBuilder implements Builder<TypeElement> {
 	}
 	
 	public ClassBuilder setSuperClass(Class<?> clazz) {
-		if (ClassUtil.getSubclassPath(clazz, Paths.get(".")) == null) {
-			throw new IllegalArgumentException("Cannot be a superclass: " + clazz.getName());
-		}
 		if (clazz.isInterface()) {
 			throw new IllegalArgumentException("Must be a class: " + clazz.getName());
 		}

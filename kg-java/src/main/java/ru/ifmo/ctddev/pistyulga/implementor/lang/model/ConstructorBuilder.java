@@ -14,7 +14,7 @@ public final class ConstructorBuilder extends AbstractExecutableBuilder {
 	
 	@Override
 	public ExecutableElement build() {
-		return new SimpleConstructorDescriptor(mods, annotations, parameters, thrownTypes, isVarArgs);
+		return new SimpleConstructorDescriptor(mods, annotations, parameters, thrownTypes, isVarArgs, body);
 	}
 
 }

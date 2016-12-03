@@ -19,9 +19,9 @@ final class SimpleConstructorDescriptor extends AbstractConstructor {
 	private TypeElement declaringClass;
 
 	public SimpleConstructorDescriptor(int mods, List<AnnotationMirror> annotations,
-			List<VariableElement> parameters, List<DeclaredType> thrownTypes, boolean isVarArgs)
+			List<VariableElement> parameters, List<DeclaredType> thrownTypes, boolean isVarArgs, String body)
 	{
-		super(mods, annotations, parameters, thrownTypes, isVarArgs);
+		super(mods, annotations, parameters, thrownTypes, isVarArgs, body);
 	}
 	
 	@Override

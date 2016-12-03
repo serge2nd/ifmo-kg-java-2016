@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlValue;
 
 import ru.ifmo.ctddev.pistyulga.common.lang.format.ElementFormatter;
 import ru.ifmo.ctddev.pistyulga.common.lang.format.FormatterFactory;
+import ru.ifmo.ctddev.pistyulga.common.lang.util.MethodUtil;
 import ru.ifmo.ctddev.pistyulga.implementor.lang.format.FormatKeyImpl;
 import ru.ifmo.ctddev.pistyulga.implementor.lang.format.FormatterFactoryImpl;
 import ru.ifmo.ctddev.pistyulga.implementor.lang.model.ClassBuilder;
@@ -29,6 +30,8 @@ public class ImplementorMain {
 			System.exit(0);
 		}
 	}
+	
+	private static void abc(int x, Double d, List<String> l, Object[] args) {}
 	
 	public static void main(String[] args) throws IOException {
 		/*checkArgs(args);

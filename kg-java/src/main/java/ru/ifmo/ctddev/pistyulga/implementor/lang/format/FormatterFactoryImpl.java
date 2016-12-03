@@ -96,6 +96,15 @@ public class FormatterFactoryImpl implements FormatterFactory<FormatKeyImpl> {
 		}
 	};
 	
+	private static final Appendable fakeAppendable = new Appendable() {
+		@Override
+		public Appendable append(CharSequence csq, int start, int end) throws IOException { return this; }
+		@Override
+		public Appendable append(char c) throws IOException { return this; }
+		@Override
+		public Appendable append(CharSequence csq) throws IOException { return this; }
+	};
+	
 	private static TypeMirror resolveType(TypeMirror type, SortedSet<String> imports)
 			throws IOException
 	{
@@ -204,7 +213,9 @@ public class FormatterFactoryImpl implements FormatterFactory<FormatKeyImpl> {
 			writeThrownTypes(executableElement, dest, params, null);
 			
 			// Body
-			writeNewLine(dest).append('{').append(BODY.from(params)).append("}\n");
+			writeNewLine(dest).append('{')
+				.append(executableElement.toString())
+				.append("}\n");
 		}
 	};
 	
@@ -321,13 +332,4 @@ public class FormatterFactoryImpl implements FormatterFactory<FormatKeyImpl> {
 		
 		return dest;
 	}
-	
-	private static Appendable fakeAppendable = new Appendable() {
-		@Override
-		public Appendable append(CharSequence csq, int start, int end) throws IOException { return this; }
-		@Override
-		public Appendable append(char c) throws IOException { return this; }
-		@Override
-		public Appendable append(CharSequence csq) throws IOException { return this; }
-	};
 }

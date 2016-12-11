@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 
+/**
+ * Implementation of absolutely ascending subset backed by the array set
+ * @see ArraySubSet
+ * @author Serge
+ */
 final class AscendingArraySubSet<T> extends ArraySubSet<T> {
 
 	public AscendingArraySubSet(List<T> backingList, T fromElem, T toElem, Comparator<? super T> comp,

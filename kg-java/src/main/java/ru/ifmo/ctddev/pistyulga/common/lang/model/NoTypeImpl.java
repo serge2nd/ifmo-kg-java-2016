@@ -17,6 +17,7 @@ public final class NoTypeImpl extends AbstractType implements NoType {
 		PACKAGE = new NoTypeImpl(TypeKind.PACKAGE, ClassUtil.toString(TypeKind.PACKAGE)),
 		NONE = new NoTypeImpl(TypeKind.NONE, null),
 		
+		// Special constant to indicate if the element is in 'java.lang' package
 		JAVA_LANG = new NoTypeImpl(TypeKind.PACKAGE, StringPool.JAVA_LANG);
 	
 	/** Private constructor for this fixed object pool */

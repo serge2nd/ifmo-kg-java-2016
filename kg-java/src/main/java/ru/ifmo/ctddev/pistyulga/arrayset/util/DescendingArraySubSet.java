@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 
+/**
+ * Implementation of absolutely descending subset backed by the array set
+ * @see ArraySubSet
+ * @author Serge
+ */
 final class DescendingArraySubSet<T> extends ArraySubSet<T> {
 
 	public DescendingArraySubSet(List<T> backingList, T fromElem, T toElem, Comparator<? super T> comp,
@@ -79,7 +84,7 @@ final class DescendingArraySubSet<T> extends ArraySubSet<T> {
 	@Override
 	public NavigableSet<T> tailSet(T fromElement, boolean inclusive) {
 		if (!isCorrectBound(fromElement, inclusive, false)) {
-			throw new IllegalArgumentException("toElement out of range");
+			throw new IllegalArgumentException("fromElement out of range");
 		}
 		return new DescendingArraySubSet<>(arrayList, this.fromElem, fromElement,
 				comparator(), this.fromStart, false, this.fromInclusive, inclusive, isImmutable);

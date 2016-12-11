@@ -1,7 +1,14 @@
 package ru.ifmo.ctddev.pistyulga.common.lang.util;
 
 import java.lang.reflect.Modifier;
+import java.util.EnumMap;
+import java.util.EnumSet;
 
+/**
+ * For storage of all possible integer modifiers in {@link EnumSet} and
+ * {@link EnumMap} in declaring order.
+ * @see Modifier
+ */
 public enum ModifierEnum {
 	PUBLIC(Modifier.PUBLIC),
 	PROTECTED(Modifier.PROTECTED),

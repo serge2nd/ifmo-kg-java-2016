@@ -7,6 +7,10 @@ public class MethodUtil {
 	/** Private constructor for this static class */
 	private MethodUtil() {}
 	
+	/**
+	 * @param method - a method
+	 * @return - the string formatted like "{@code <method_name>(<param1_type>, <param2_type>, ..., <paramN_type>)}"
+	 */
 	public static String getSignature(Method method) {
 		StringBuilder result =
 				new StringBuilder(method.getName()).append('(');

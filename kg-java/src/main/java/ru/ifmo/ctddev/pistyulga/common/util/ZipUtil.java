@@ -60,6 +60,13 @@ public class ZipUtil {
 		}
 	}
 	
+	/**
+	 * Equivalent to {@link #writeContent(InputStream, ZipOutputStream, int)
+	 * 		writeContent(InputStream, ZipOutputStream, DEFAULT_BUF_SIZE)}
+	 * @param inputStream
+	 * @param zipOut
+	 * @throws IOException if I/O error has occurred
+	 */
 	public static void writeContent(InputStream inputStream, ZipOutputStream zipOut) throws IOException {
 		writeContent(inputStream, zipOut, DEFAULT_BUF_SIZE);
 	}

@@ -7,14 +7,22 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NavigableSet;
 import java.util.NoSuchElementException;
+import java.util.TreeSet;
 
+/**
+ * This class and its subclasses extends {@link ArraySet} to represent a subset of the array set.
+ * The corresponding principle is taken from the {@link TreeSet} source code.
+ * @see AscendingArraySubSet
+ * @see DescendingArraySubSet
+ * @author Serge
+ */
 abstract class ArraySubSet<T> extends ArraySet<T> {
 	final T fromElem, toElem;
 	final boolean fromStart, toEnd;
 	final boolean fromInclusive, toInclusive;
 	
 	/**
-	 * @throws ClassCastException
+	 * @throws ClassCastException if the passed type is not comparable
 	 */
 	private static <U> int compare(U e1, U e2, Comparator<? super U> comp) {
 		if (comp != null) {
@@ -36,18 +44,18 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 	}
 	
 	/**
-	 * 
-	 * @param backingList
-	 * @param fromElem
-	 * @param toElem
-	 * @param comp
-	 * @param fromStart
-	 * @param toEnd
-	 * @param fromInclusive
-	 * @param toInclusive
-	 * @param isImmutable
-	 * @throws ClassCastException
-	 * @throws IllegalArgumentException
+	 * Creates new instance for storage of the values from selected range (see params)
+	 * @param backingList - backing list
+	 * @param fromElem - lower bound
+	 * @param toElem - upper bound
+	 * @param comp - a comparator
+	 * @param fromStart - if {@code true}, {@code fromElem} is ignored (left-unbounded)
+	 * @param toEnd - if {@code true}, {@code toElem} is ignored (right-unbounded)
+	 * @param fromInclusive - determines if lower bound should be included to possible range
+	 * @param toInclusive - determines if upper bound should be included to possible range
+	 * @param isImmutable - {@link ArraySet#isImmutable}
+	 * @throws ClassCastException if the real type is not compatible with the given comparator
+	 * @throws IllegalArgumentException if fromElement > toElement
 	 */
 	public ArraySubSet(List<T> backingList, T fromElem, T toElem, Comparator<? super T> comp,
 			boolean fromStart, boolean toEnd, boolean fromInclusive, boolean toInclusive, boolean isImmutable)
@@ -73,7 +81,9 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 		this.fromInclusive = fromInclusive; this.toInclusive = toInclusive;
 	}
 	
-	// *** Utility methods for checking range ***
+	/*
+	 *** Utility methods for checking range ***
+	 */
 	final boolean tooLow(T e) {
         if (!fromStart) {
             int c = compare(e, fromElem, comparator());
@@ -102,7 +112,9 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
 						left ? this.fromElem : this.toElem, comparator()) == 0);
     }
     
-    // *** Methods which implementation depends on ascending/descending order ***
+    /*
+     *** Methods which implementation depends on ascending/descending order ***
+     */
     public abstract Iterator<T> iterator();
     public abstract Iterator<T> descendingIterator();
     public abstract T first();
@@ -118,7 +130,9 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
     public abstract NavigableSet<T> tailSet(T fromElement, boolean inclusive);
     */
     
-    // *** Common methods ***
+    /*
+     *** Common methods ***
+     */
     @Override
     public boolean isEmpty() {
     	return this.size() == 0;
@@ -245,7 +259,9 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
     	return result;
     }
     
-    // *** Utilities which used in subclasses ***
+    /*
+     *** Utilities which used in subclasses ***
+     */
     final int absIndexOfFirst() {
     	int i = fromStart ? ((super.size() > 0) ? 0 : -1) :
     			(fromInclusive ? super.indexOfCeiling(fromElem) : super.indexOfHigher(fromElem));
@@ -324,6 +340,12 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
     	return tooLow(val) ? -1 : i;
     }
     
+    /*
+     *** Absolute iterators ***
+     */
+    /**
+     * @return absolutely ascending iterator (independently to defined order)
+     */
     final Iterator<T> absAscIterator() {
     	final ListIterator<T> backingIterator = listIterator(false);
     	return new Iterator<T>() {
@@ -347,6 +369,9 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
     	};
     }
     
+    /**
+     * @return absolutely descending iterator (independently to defined order)
+     */
     final Iterator<T> absDescIterator() {
     	final ListIterator<T> backingIterator = listIterator(true);
     	return new Iterator<T>() {
@@ -370,6 +395,10 @@ abstract class ArraySubSet<T> extends ArraySet<T> {
     	};
     }
     
+    /**
+     * @param fromEnd determines if required a descending iterator
+     * @return backing iterator for the iterators defined above
+     */
     private ListIterator<T> listIterator(boolean fromEnd) {
     	final int start = absIndexOfFirst(), end = absIndexOfLast();
     	return new ListIterator<T>() {

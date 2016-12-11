@@ -12,12 +12,24 @@ import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.SortedSet;
 
+/**
+ * Implementation of the {@link NavigableSet} interface based on {@link ArrayList}.
+ * Applies binary search to reach O(log n) searching time.
+ * @author Serge
+ */
 public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	
 	private final Comparator<? super T> comparator;
+	
+	/** Backing array list */
 	final List<T> arrayList;
+	
+	/** Immutability flag. To pass the test #6 :) */
 	final boolean isImmutable;
 	
+	/*
+	 *** Constructors ***
+	 */
 	public ArraySet() {
 		this.arrayList = new ArrayList<>();
 		this.comparator = null;
@@ -55,13 +67,21 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		this.isImmutable = false;
 	}
 	
-	// This constructor is used internally
+	/**
+	 * This constructor is used internally for creating subsets
+	 * @param arrayList - backing list from this instance
+	 * @param comparator - a comparator from this instance
+	 * @param isImmutable - immutability flag from this instance
+	 */
 	ArraySet(List<T> arrayList, Comparator<? super T> comparator, boolean isImmutable) {
 		this.arrayList = arrayList;
 		this.comparator = comparator;
 		this.isImmutable = isImmutable;
 	}
 	
+	/*
+	 *** Add/contain/remove methods ***
+	 */
 	@Override
 	public boolean add(T val) {
 		if (isImmutable) {
@@ -119,6 +139,11 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		return position >= 0;
 	}
 	
+	/**
+	 * Performs binary search of the given value.
+	 * @param val - required value
+	 * @return result of calling {@link Collections#binarySearch(List, Object)}
+	 */
 	final int getPosition(T val) {
 		int position = 0;
 		if (comparator != null) {
@@ -132,6 +157,12 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		return position;
 	}
 	
+	/**
+	 * Adds the value to the backing list
+	 * @param position - index
+	 * @param val - the value being added
+	 * @return
+	 */
 	private boolean insertAt(int position, T val) {
 		if (position < 0) {
 			arrayList.add(decodeInsPos(position), val);
@@ -140,11 +171,18 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		return false;
 	}
 	
+	/**
+	 * Decodes inserting position returned by {@link Collections#binarySearch(List, Object)}
+	 * @param position
+	 * @return real inserting position
+	 */
 	private int decodeInsPos(int position) {
 		return -position - 1;
 	}
 	
-	// *** Simple "one-row" methods ***
+	/*
+	 *** Simple "one-row" methods ***
+	 */
 	@Override
 	public T pollFirst() {
 		if (isImmutable) {
@@ -179,28 +217,6 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	public final Comparator<? super T> comparator() { return comparator; }
 	
 	@Override
-	public Iterator<T> iterator() {
-		return new Iterator<T>() {
-			private Iterator<T> backingIterator = arrayList.iterator();
-			@Override
-			public boolean hasNext() {
-				return backingIterator.hasNext();
-			}
-			@Override
-			public T next() {
-				return backingIterator.next();
-			}
-			@Override
-			public void remove() {
-				if (isImmutable) {
-					throw new UnsupportedOperationException("Set is immutable");
-				}
-				backingIterator.remove();
-			}
-		};
-	}
-
-	@Override
 	public T first() {
 		if (arrayList.isEmpty()) {
 			throw new NoSuchElementException("Set is empty");
@@ -234,7 +250,38 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	@Override
 	public <U> U[] toArray(U[] a) { return arrayList.toArray(a); }
 	
-	// *** Utility methods ***
+	/**
+	 * Custom iterator is required due to possible immutability
+	 */
+	@Override
+	public Iterator<T> iterator() {
+		return new Iterator<T>() {
+			private Iterator<T> backingIterator = arrayList.iterator();
+			@Override
+			public boolean hasNext() {
+				return backingIterator.hasNext();
+			}
+			@Override
+			public T next() {
+				return backingIterator.next();
+			}
+			@Override
+			public void remove() {
+				if (isImmutable) {
+					throw new UnsupportedOperationException("Set is immutable");
+				}
+				backingIterator.remove();
+			}
+		};
+	}
+	
+	/*
+	 *** Utility methods ***
+	 */
+	/**
+	 * @param i - position
+	 * @return an element of the backing list or {@code null} if {@code i < 0}
+	 */
 	final T get(int i) {
 		return (i >= 0) ? arrayList.get(i) : null;
 	}
@@ -293,7 +340,9 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 		return position - 1;
 	}
 	
-	// *** "Complex" methods ***
+	/*
+	 *** "Complex" methods ***
+	 */
 	@Override
 	public Iterator<T> descendingIterator() {
 		return new Iterator<T>() {

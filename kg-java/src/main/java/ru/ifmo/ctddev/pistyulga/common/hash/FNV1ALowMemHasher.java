@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * @see <a href="http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-1a">FNV-1a Hash</a>
+ * @author Serge
  */
 public class FNV1ALowMemHasher implements LowMemHasher {
 	public static enum Size {
@@ -131,7 +132,7 @@ public class FNV1ALowMemHasher implements LowMemHasher {
 	}
 	
 	/**
-	 * @throws IllegalStateException - if {@link #finish()} was not called before
+	 * @throws IllegalStateException if {@link #finish()} was not called before
 	 */
 	@Override
 	public String toString() {

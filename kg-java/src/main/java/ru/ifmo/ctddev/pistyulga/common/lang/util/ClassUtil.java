@@ -28,8 +28,11 @@ public class ClassUtil {
 	}
 	
 	public static Path resolvePackagePath(Class<?> clazz, Path cp) {
-		return cp.resolve(clazz.getPackage()
-				.getName().replace(NAME_SEPARATOR, separatorChar));
+		Package pkg = clazz.getPackage();
+		if (pkg == null) {
+			return cp;
+		}
+		return cp.resolve(pkg.getName().replace(NAME_SEPARATOR, separatorChar));
 	}
 	
 	public static String toString(TypeKind kind) {

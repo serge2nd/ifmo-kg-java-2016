@@ -1,5 +1,6 @@
 package ru.ifmo.ctddev.pistyulga.implementor;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -7,15 +8,20 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.EnumMap;
+import java.util.Objects;
 
 import javax.lang.model.element.TypeElement;
+import javax.tools.JavaCompiler;
+import javax.tools.ToolProvider;
 
 import info.kgeorgiy.java.advanced.implementor.Impler;
 import info.kgeorgiy.java.advanced.implementor.ImplerException;
 import info.kgeorgiy.java.advanced.implementor.JarImpler;
 import ru.ifmo.ctddev.pistyulga.common.lang.format.ElementFormatter;
 import ru.ifmo.ctddev.pistyulga.common.lang.format.FormatterFactory;
+import ru.ifmo.ctddev.pistyulga.common.lang.util.CharPool;
 import ru.ifmo.ctddev.pistyulga.common.lang.util.ClassUtil;
 import ru.ifmo.ctddev.pistyulga.implementor.lang.format.FormatKeyImpl;
 import ru.ifmo.ctddev.pistyulga.implementor.lang.format.FormatterFactoryImpl;
@@ -87,10 +93,12 @@ public class Implementor implements Impler, JarImpler {
 		
 		// Write *.java
 		try (Writer writer = new PrintWriter(compilationUnitPath.toString())) {
-			writer.write("package ");
-			writer.write(token.getPackage().getName());
-			writer.write(";\n");
-			
+			Package pkg = token.getPackage();
+			if (pkg != null) {
+				writer.write("package ");
+				writer.write(pkg.getName());
+				writer.write(";\n");
+			}
 			formatter.format(result, writer, new EnumMap<>(FormatKeyImpl.class));
 		} catch (IOException e) {
 			throw new ImplerException("Cannot write " + compilationUnitPath, e);
@@ -99,7 +107,28 @@ public class Implementor implements Impler, JarImpler {
 
 	@Override
 	public void implementJar(Class<?> token, Path root) throws ImplerException {
-		// TODO
+		Path rootFolder = (root.getNameCount() > 1) ?
+				root.subpath(0, root.getNameCount() - 1) : Paths.get(".");
+		this.implement(token, rootFolder);
+		
+		Package pkg = token.getPackage();
+		String packageName = (pkg != null) ? pkg.getName() : "";
+		Path packagePath = rootFolder.resolve(
+				packageName.replace(CharPool.NAME_SEPARATOR, File.separatorChar));
+		Path sourcePath = packagePath.resolve(token.getSimpleName() + "Impl.java");
+		
+		JavaCompiler compiler = Objects.requireNonNull(
+				ToolProvider.getSystemJavaCompiler(), "compiler");
+		
+		int exitCode = compiler.run(null, null, null, sourcePath.toString());
+		if (exitCode != 0) {
+			throw new ImplerException("Compilation error, see output. Exit code " + exitCode);
+		}
+		
+		try {
+			JarUtil.create(packagePath, packageName, root.toString());
+		} catch (IOException e) {
+			throw new ImplerException("Cannot write " + root.toString(), e);
+		}
 	}
-
 }

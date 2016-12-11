@@ -11,6 +11,7 @@ import java.util.jar.Manifest;
 
 import javax.lang.model.SourceVersion;
 
+import ru.ifmo.ctddev.pistyulga.common.lang.util.CharPool;
 import ru.ifmo.ctddev.pistyulga.common.util.ZipUtil;
 
 public class JarUtil {
@@ -34,7 +35,7 @@ public class JarUtil {
 			throw new IllegalArgumentException("Invalid package: " + packageName);
 		}
 		
-		Path packagePath = Paths.get(packageName.replace('.', File.separatorChar));
+		Path packagePath = Paths.get(packageName.replace(CharPool.NAME_SEPARATOR, File.separatorChar));
 		if (!packageName.isEmpty() && !src.endsWith(packagePath)) {
 			throw new IllegalArgumentException(
 					"Package " + packageName + " and source " + src + " are incompatible");

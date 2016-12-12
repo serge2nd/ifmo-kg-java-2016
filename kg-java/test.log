@@ -1,0 +1,196 @@
+=== Running test08_recursion
+Running test08_recursion
+=== Running test01_oneEmptyFile
+Running test01_oneEmptyFile
+=== Running test02_tenEmptyFiles
+Running test02_tenEmptyFiles
+=== Running test03_missingFiles
+Running test03_missingFiles
+2016-12-13 02-11-11 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: 99tqvAhbjuZ18crACi2VENBtN6SBKA
+2016-12-13 02-11-11 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: lxPDklZD61ycKyS4ySUfNAd106TxnY
+2016-12-13 02-11-11 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: MY3yyxaTkK3bZtuL2o4Bbnu7DctYqy
+=== Running test04_errorReading
+Running test04_errorReading
+2016-12-13 02-11-11 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: Cannot read dir __Test__Walk__..
+2016-12-13 02-11-11 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: __Test__Walk__@
+=== Running test05_smallRandomFiles
+Running test05_smallRandomFiles
+=== Running test06_mediumRandomFiles
+Running test06_mediumRandomFiles
+=== Running test07_largeRandomFiles
+Running test07_largeRandomFiles
+============================
+OK RecursiveWalkTest for ru.ifmo.ctddev.pistyulga.walk.WalkMain
+Class: RecursiveWalkTest
+Salt: 
+Certificate: CqHm40lN3W4ieji2G7gc1IHV8DI=
++-----------+
+|        .. |
+|     :..:. |
+|      | o:.|
+|      |o/: |
+|      .X#\.|
+|      .:/: |
+|       ..: |
+|       ..  |
+|        .  |
+|           |
+|           |
++-----------+
+== Running test18_lower
+== Running test19_ceiling
+== Running test20_higher
+== Running test21_floor
+== Running test22_navigableTailSet
+== Running test23_navigableHeadSet
+== Running test24_navigableSubSet
+== Running test01_constructors
+== Running test02_empty
+== Running test03_naturalOrder
+== Running test04_externalOrder
+== Running test05_constructorPerformance
+    constructor done in 12ms
+== Running test06_immutable
+== Running test07_contains
+== Running test08_containsPerformance
+    contains done in 20ms
+== Running test09_containsAll
+== Running test10_containsAllPerformance
+    contains done in 12ms
+== Running test11_comparator
+== Running test12_headSet
+== Running test13_tailSet
+== Running test14_subSet
+== Running test15_tailSetPerformance
+    tailSet done in 16ms
+== Running test16_first
+== Running test17_last
+============================
+OK NavigableSetTest for ru.ifmo.ctddev.pistyulga.arrayset.util.ArraySet
+Class: NavigableSetTest
+Salt: 
+Certificate: YAZd/1bFC8l3zUEshYqMioUuffA=
++-----------+
+|     .:    |
+|      o:   |
+|      X.   |
+|      :o   |
+|     .:    |
+|     .:    |
+|    .::    |
+|   ..::    |
+|  :X::.    |
+|   \oo:.   |
+|   /X.o:   |
++-----------+
+== Running test07_defaultConstructorClasses
+== Running test08_noDefaultConstructorClasses
+Note: C:\Users\Serge\workspace\kg-java\test08_noDefaultConstructorClasses\javax\management\ImmutableDescriptorImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+== Running test09_ambiguousConstructorClasses
+Note: C:\Users\Serge\workspace\kg-java\test09_ambiguousConstructorClasses\javax\imageio\IIOImageImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+== Running test10_utilityClasses
+== Running test11_finalClasses
+== Running test12_standardNonClasses
+== Running test13_constructorThrows
+== Running test14_nonPublicAbstractMethod
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+== Running test15_inheritedNonPublicAbstractMethod
+Note: C:\Users\Serge\workspace\kg-java\test15_inheritedNonPublicAbstractMethod\org\omg\CORBA_2_3\ORBImpl.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+== Running test01_constructor
+== Running test02_standardMethodlessInterfaces
+== Running test03_standardInterfaces
+Note: C:\Users\Serge\workspace\kg-java\test03_standardInterfaces\javax\annotation\GeneratedImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+== Running test04_extendedInterfaces
+Note: C:\Users\Serge\workspace\kg-java\test04_extendedInterfaces\javax\sql\rowset\CachedRowSetImpl.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: C:\Users\Serge\workspace\kg-java\test04_extendedInterfaces\javax\sql\rowset\CachedRowSetImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+== Running test05_standardNonInterfaces
+== Running test06_java8Interfaces
+============================
+OK ClassImplementorTest for ru.ifmo.ctddev.pistyulga.implementor.Implementor
+Class: ClassImplementorTest
+Salt: 
+Certificate: 19BJWdXp5ZdwEkZXl37lmLqCWts=
++-----------+
+|.:         |
+|o:         |
+|-:         |
+||o         |
+|o: .       |
+|::::       |
+|X .:o.     |
+|o..o.      |
+|o: .       |
+|:...       |
+||X..       |
++-----------+
+== Running test01_constructor
+== Running test15_encoding
+== Running test07_defaultConstructorClasses
+== Running test08_noDefaultConstructorClasses
+þÿNote: test08_noDefaultConstructorClasses\javax\management\ImmutableDescriptorImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+þÿNote: C:\Users\Serge\workspace\kg-java\test08_noDefaultConstructorClasses\javax\management\ImmutableDescriptorImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+== Running test09_ambiguousConstructorClasses
+þÿNote: test09_ambiguousConstructorClasses\javax\imageio\IIOImageImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+þÿNote: C:\Users\Serge\workspace\kg-java\test09_ambiguousConstructorClasses\javax\imageio\IIOImageImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+== Running test10_utilityClasses
+== Running test11_finalClasses
+== Running test12_standardNonClasses
+== Running test13_constructorThrows
+== Running test14_nonPublicAbstractMethod
+þÿNote: test14_nonPublicAbstractMethod\javax\management\remote\rmi\RMIServerImplImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+þÿNote: test14_nonPublicAbstractMethod\javax\management\remote\rmi\RMIIIOPServerImplImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+þÿNote: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+== Running test15_inheritedNonPublicAbstractMethod
+þÿNote: test15_inheritedNonPublicAbstractMethod\org\omg\CORBA_2_3\ORBImpl.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+þÿNote: C:\Users\Serge\workspace\kg-java\test15_inheritedNonPublicAbstractMethod\org\omg\CORBA_2_3\ORBImpl.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+== Running test02_standardMethodlessInterfaces
+== Running test03_standardInterfaces
+þÿNote: test03_standardInterfaces\javax\annotation\GeneratedImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+þÿNote: C:\Users\Serge\workspace\kg-java\test03_standardInterfaces\javax\annotation\GeneratedImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+== Running test04_extendedInterfaces
+þÿNote: test04_extendedInterfaces\javax\sql\rowset\CachedRowSetImpl.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: test04_extendedInterfaces\javax\sql\rowset\CachedRowSetImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+þÿNote: C:\Users\Serge\workspace\kg-java\test04_extendedInterfaces\javax\sql\rowset\CachedRowSetImpl.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: C:\Users\Serge\workspace\kg-java\test04_extendedInterfaces\javax\sql\rowset\CachedRowSetImpl.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+== Running test05_standardNonInterfaces
+== Running test06_java8Interfaces
+============================
+OK ClassJarImplementorTest for ru.ifmo.ctddev.pistyulga.implementor.Implementor
+Class: ClassJarImplementorTest
+Salt: 
+Certificate: 5UqI8QzJuaJeB/tArTbqdUASm2Q=
++-----------+
+|     .:|.  |
+|     :o:   |
+|     .Xo.  |
+|    ..\:.  |
+|     ::\:  |
+|     ::|   |
+|     . X.  |
+|       o   |
+|        o  |
+|       .:: |
+|        X  |
++-----------+

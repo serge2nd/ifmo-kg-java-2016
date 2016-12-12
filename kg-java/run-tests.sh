@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SEP=":"
+SEP=";"
 
 CLASSPATH="$JAVA_HOME/../lib/tools.jar${SEP}lib/*${SEP}target/kg-java-0.1-common.jar"
 

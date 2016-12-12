@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Created-By: Serge & 1.8.0_112
+Main-Class: ru.ifmo.ctddev.pistyulga.implementor.ImplementorMain
+Class-Path: lib\ImplementorTest.jar
+
+Name: ru/ifmo/ctddev/pistyulga/common/
+Sealed: true
+Specification-Title: Common classes for the ITMO Java Advanced 2016
+Specification-Version: 0.1
+Specification-Vendor: Serge
+Implementation-Title: ru.ifmo.ctddev.pistyulga.common
+Implementation-Version: 0.1
+Implementation-Vendor: Serge
+
+Name: ru/ifmo/ctddev/pistyulga/implementor/
+Specification-Title: ITMO Java Advanced 2016 Implementor task
+Specification-Version: 0.1
+Specification-Vendor: Serge
+Implementation-Title: ru.ifmo.ctddev.pistyulga.implementor
+Implementation-Version: 0.1
+Implementation-Vendor: Serge
+

@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Created-By: Serge & 1.8.0_112
+
+Name: ru/ifmo/ctddev/pistyulga/common/
+Sealed: true
+Specification-Title: Common classes for the ITMO Java Advanced 2016
+Specification-Version: 0.1
+Specification-Vendor: Serge
+Implementation-Title: ru.ifmo.ctddev.pistyulga.common
+Implementation-Version: 0.1
+Implementation-Vendor: Serge
+

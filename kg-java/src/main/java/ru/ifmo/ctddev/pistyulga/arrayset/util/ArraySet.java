@@ -21,7 +21,7 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
 	
 	private final Comparator<? super T> comparator;
 	
-	/** Backing array list */
+	/** Backing array */
 	final List<T> arrayList;
 	
 	/** Immutability flag. To pass the test #6 :) */

@@ -18,7 +18,7 @@ public class CollectionUtil {
 									"(Set|List))");
 	
 	/**
-	 * Used to determine immutability of a collection to pass test #6 :)
+	 * Used to determine immutability of a collection to pass the test #6 :)
 	 * @param c - a collection
 	 * @return {@code true} if this collection is one of standard immutable collections
 	 */

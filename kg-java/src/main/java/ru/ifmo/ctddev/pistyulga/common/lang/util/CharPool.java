@@ -21,5 +21,6 @@ public class CharPool {
 		FLOAT  = 'F',
 		DOUBLE = 'D',
 		CLASS  = 'L',
-		NAME_SEPARATOR = '.';
+		NAME_SEPARATOR = '.',
+		FS_NAME_SEPARATOR = '/';
 }

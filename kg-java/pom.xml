@@ -78,6 +78,9 @@
   						<includes>
   							<include>**/ru/ifmo/ctddev/pistyulga/implementor/**</include>
   						</includes>
+  						<compilerArguments>
+  							<classpath>${project.basedir}/lib/ImplementorTest.jar</classpath>
+  						</compilerArguments>
   					</configuration>
   				</execution>
   				

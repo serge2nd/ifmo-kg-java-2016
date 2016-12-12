@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import ru.ifmo.ctddev.pistyulga.common.lang.util.CharPool;
+
 public class ZipUtil {
 	/** Private constructor for this static class */
 	private ZipUtil() {}
@@ -29,14 +31,15 @@ public class ZipUtil {
 	
 	public static void addRecursively(Path src, Path dest, ZipOutputStream zipOut, int bufferSize) throws IOException {
 		Path normDest = dest.normalize();
+		String destStr = normDest.toString()
+				.replace(File.separatorChar, CharPool.FS_NAME_SEPARATOR);
 		
 		if (Files.isDirectory(src)) {
 			if (!normDest.equals(EMPTY_PATH)) {
-				String destStr = normDest.toString();
 				int destStrLen = destStr.length();
 				
-				if (destStr.charAt(destStrLen - 1) != File.separatorChar) {
-					destStr += File.separatorChar;
+				if (destStr.charAt(destStrLen - 1) != CharPool.FS_NAME_SEPARATOR) {
+					destStr += CharPool.FS_NAME_SEPARATOR;
 				}
 				
 				zipOut.putNextEntry(new ZipEntry(destStr));
@@ -51,7 +54,7 @@ public class ZipUtil {
 				}
 			}
 		} else if (Files.exists(src)) {
-			zipOut.putNextEntry(new ZipEntry(normDest.toString()));
+			zipOut.putNextEntry(new ZipEntry(destStr));
 			writeContent(new BufferedInputStream(new FileInputStream(src.toString())),
 					zipOut, bufferSize);
 			zipOut.closeEntry();
@@ -72,7 +75,6 @@ public class ZipUtil {
 	}
 	
 	/**
-	 * TODO Automatically closes the stream even when an error has occurred.
 	 * @param inputStream - an input stream
 	 * @param zipOut - ZIP output stream
 	 * @param bufferSize - size of a byte buffer for transfer of the bytes from stream

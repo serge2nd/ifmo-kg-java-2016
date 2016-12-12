@@ -21,6 +21,9 @@ import ru.ifmo.ctddev.pistyulga.implementor.lang.model.ClassBuilder;
 import ru.ifmo.ctddev.pistyulga.implementor.lang.model.ConstructorBuilder;
 import ru.ifmo.ctddev.pistyulga.implementor.lang.model.MethodBuilder;
 
+/**
+ * @author Serge
+ */
 public class ImplementorUtil {
 	/** Private constructor for this static class */
 	private ImplementorUtil() {}
@@ -42,6 +45,14 @@ public class ImplementorUtil {
 		return null;
 	}
 	
+	/**
+	 * Looks for abstract methods in all superclasses and interfaces of given class.
+	 * If such a method found and it's not implemented in subclasses and it was not added to the builder before
+	 * (we determine this with a set of method signatures made by {@link MethodUtil#getSignature(Method)}),
+	 * then that will be done.
+	 * @param clazz - class
+	 * @param classBuilder - instance of {@link ClassBuilder}
+	 */
 	public static void buildUnimplementedMethods(Class<?> clazz, ClassBuilder classBuilder) {
 		
 		Set<String> signatures = new HashSet<>();

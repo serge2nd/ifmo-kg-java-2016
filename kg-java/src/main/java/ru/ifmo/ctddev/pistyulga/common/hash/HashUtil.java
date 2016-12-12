@@ -10,6 +10,7 @@ public class HashUtil {
 	/**
 	 * Processes the streaming data with the given hasher.
 	 * Automatically closes the stream even when an error has occurred.
+	 * @param hasher - a hasher
 	 * @param inputStream - a stream of data being hashed
 	 * @return Given hasher instance
 	 * @throws IOException if I/O error has occurred

@@ -27,6 +27,10 @@ import ru.ifmo.ctddev.pistyulga.implementor.lang.format.FormatKeyImpl;
 import ru.ifmo.ctddev.pistyulga.implementor.lang.format.FormatterFactoryImpl;
 import ru.ifmo.ctddev.pistyulga.implementor.lang.model.ClassBuilder;
 
+/**
+ * Implementation of the {@link Impler} and {@link JarImpler} interfaces
+ * @author Serge
+ */
 public class Implementor implements Impler, JarImpler {
 
 	@Override
@@ -36,7 +40,7 @@ public class Implementor implements Impler, JarImpler {
 			throw new ImplerException("Cannot be a superclass: " + token.getName());
 		}
 		
-		// If not interface, check for accessible constructor
+		// If not an interface, look for accessible constructor
 		Constructor<?> accessibleConstructor = null;
 		if (!token.isInterface()) {
 			accessibleConstructor = ImplementorUtil.getAccessibleConstructor(token);
@@ -49,7 +53,7 @@ public class Implementor implements Impler, JarImpler {
 		if (packagePath == root) {
 			packagePath = ClassUtil.resolvePackagePath(token, root);
 		}
-		
+
 		// Class name & destination file path
 		String classSimpleName = token.getSimpleName() + "Impl",
 				className = token.getName() + "Impl";
@@ -106,17 +110,21 @@ public class Implementor implements Impler, JarImpler {
 	}
 
 	@Override
-	public void implementJar(Class<?> token, Path root) throws ImplerException {
-		Path rootFolder = (root.getNameCount() > 1) ?
-				root.subpath(0, root.getNameCount() - 1) : Paths.get(".");
+	public void implementJar(Class<?> token, Path jarFilePath) throws ImplerException {
+		
+		// Implement given class
+		Path rootFolder = (jarFilePath.getNameCount() > 1) ?
+				jarFilePath.subpath(0, jarFilePath.getNameCount() - 1) : Paths.get(".");
 		this.implement(token, rootFolder);
 		
+		// Resolve necessary paths
 		Package pkg = token.getPackage();
 		String packageName = (pkg != null) ? pkg.getName() : "";
 		Path packagePath = rootFolder.resolve(
 				packageName.replace(CharPool.NAME_SEPARATOR, File.separatorChar));
 		Path sourcePath = packagePath.resolve(token.getSimpleName() + "Impl.java");
 		
+		// Compile the implementation src
 		JavaCompiler compiler = Objects.requireNonNull(
 				ToolProvider.getSystemJavaCompiler(), "compiler");
 		
@@ -125,10 +133,11 @@ public class Implementor implements Impler, JarImpler {
 			throw new ImplerException("Compilation error, see output. Exit code " + exitCode);
 		}
 		
+		// Create JAR with source code and compiled class
 		try {
-			JarUtil.create(packagePath, packageName, root.toString());
+			JarUtil.create(packagePath, packageName, jarFilePath.toString());
 		} catch (IOException e) {
-			throw new ImplerException("Cannot write " + root.toString(), e);
+			throw new ImplerException("Cannot write " + jarFilePath.toString(), e);
 		}
 	}
 }

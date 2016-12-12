@@ -13,6 +13,15 @@ public class ClassUtil {
 	/** Private constructor for this static class */
 	private ClassUtil() {}
 	
+	/**
+	 * @param clazz - a class
+	 * @param cp - class path
+	 * @return {@code null} if this class is {@link null}, enum or final;
+	 * the given class path if the class is public; the given class path
+	 * concatenated with the package path (e.g. for "${project}/src/main/java"
+	 * and the package {@code java.lang} it will be "${project}/src/main/java/java/lang")
+	 * otherwise
+	 */
 	public static Path getSubclassPath(Class<?> clazz, Path cp) {
 		if (clazz == null || Enum.class.isAssignableFrom(clazz) ||
 				Modifier.isFinal(clazz.getModifiers()))
@@ -27,6 +36,13 @@ public class ClassUtil {
 		return resolvePackagePath(clazz, cp);
 	}
 	
+	/**
+	 * Adds package path to the given class path (e.g. for "${project}/src/main/java"
+	 * and the package {@code java.lang} it will be "${project}/src/main/java/java/lang")
+	 * @param clazz - a class
+	 * @param cp - class path
+	 * @return the result
+	 */
 	public static Path resolvePackagePath(Class<?> clazz, Path cp) {
 		Package pkg = clazz.getPackage();
 		if (pkg == null) {

@@ -22,7 +22,7 @@ public class ImplementorMain {
 		}
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException {
+	public static void main(String[] args) {
 		checkArgs(args);
 		
 		String className = args[0],

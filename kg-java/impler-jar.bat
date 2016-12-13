@@ -4,6 +4,11 @@ setlocal enabledelayedexpansion
 rem Check destination classes directory
 set classes_dir=%1
 
+if [%classes_dir%] == [] (
+	echo Specify classes dir
+	exit /b 0
+)
+
 if not exist %classes_dir%\* (
 	if exist %classes_dir% (
 		echo Cannot create dir %classes_dir%

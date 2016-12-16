@@ -17,7 +17,7 @@ if [[ -d "$classes_dir" ]]; then
 	rm -rf "$classes_dir"
 fi
 
-mkdir "$classes_dir"
+mkdir -p "$classes_dir"
 
 # Compile
 javac -cp lib/ImplementorTest.jar -d "$classes_dir" $(find src/main/java/ru/ifmo/ctddev/pistyulga/{common,implementor} -name *.java)

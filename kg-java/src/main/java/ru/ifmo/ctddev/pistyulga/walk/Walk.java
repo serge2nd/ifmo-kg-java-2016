@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Writer;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,7 +35,7 @@ public class Walk {
 	 */
 	public static void walk(
 			LowMemHasher hasher, InputStream pathsInputStream,
-			Writer hashInfoWriter, String encoding)
+			Appendable hashInfoWriter, String encoding)
 			throws IOException
 	{
 		try(BufferedReader pathsReader =
@@ -54,7 +53,7 @@ public class Walk {
 		}
 	}
 	
-	public static String getFileHash(LowMemHasher hasher, String filePath, Writer hashInfoWriter) {
+	public static String getFileHash(LowMemHasher hasher, String filePath, Appendable hashInfoWriter) {
 		filePath = filePath.trim();
 		
 		if (filePath.length() > 0) {
@@ -96,7 +95,7 @@ public class Walk {
 		return null;
 	}
 	
-	private static void walk(LowMemHasher hasher, DirectoryStream<Path> directoryStream, Writer hashInfoWriter)
+	private static void walk(LowMemHasher hasher, DirectoryStream<Path> directoryStream, Appendable hashInfoWriter)
 			throws IOException
 	{
 		for (Path path : directoryStream) {
@@ -107,12 +106,12 @@ public class Walk {
 		}
 	}
 	
-	private static void writeHashInfo(String filePath, String hashStr, Writer hashInfoWriter)
+	private static void writeHashInfo(String filePath, String hashStr, Appendable hashInfoWriter)
 			throws IOException
 	{
-		hashInfoWriter.write(hashStr.toUpperCase());
-		hashInfoWriter.write(" ");
-		hashInfoWriter.write(filePath);
-		hashInfoWriter.write("\n");
+		hashInfoWriter.append(hashStr.toUpperCase());
+		hashInfoWriter.append(" ");
+		hashInfoWriter.append(filePath);
+		hashInfoWriter.append("\n");
 	}
 }

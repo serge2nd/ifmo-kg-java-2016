@@ -14,6 +14,7 @@ import java.util.Queue;
 import java.util.Set;
 
 import javax.lang.model.element.ExecutableElement;
+import javax.swing.event.AncestorEvent;
 
 import ru.ifmo.ctddev.pistyulga.common.lang.util.MethodUtil;
 import ru.ifmo.ctddev.pistyulga.implementor.lang.builder.ExecutableBuilder;
@@ -22,12 +23,18 @@ import ru.ifmo.ctddev.pistyulga.implementor.lang.model.ConstructorBuilder;
 import ru.ifmo.ctddev.pistyulga.implementor.lang.model.MethodBuilder;
 
 /**
+ * Utility methods for implementing classes
  * @author Serge
  */
 public class ImplementorUtil {
 	/** Private constructor for this static class */
 	private ImplementorUtil() {}
 	
+	/**
+	 * Gets non-private constructor from given class preferring the default constructor
+	 * @param clazz - a class
+	 * @return non-private constructor or {@code null} if such not exists
+	 */
 	public static Constructor<?> getAccessibleConstructor(Class<?> clazz) {
 		try {
 			Constructor<?> defaultConstructor = clazz.getDeclaredConstructor();
@@ -50,8 +57,8 @@ public class ImplementorUtil {
 	 * If such a method found and it's not implemented in subclasses and it was not added to the builder before
 	 * (we determine this with a set of method signatures made by {@link MethodUtil#getSignature(Method)}),
 	 * then that will be done.
-	 * @param clazz - class
-	 * @param classBuilder - instance of {@link ClassBuilder}
+	 * @param clazz - a class
+	 * @param classBuilder - an instance of {@link ClassBuilder}
 	 */
 	public static void buildUnimplementedMethods(Class<?> clazz, ClassBuilder classBuilder) {
 		
@@ -116,6 +123,11 @@ public class ImplementorUtil {
 		return targetMethod;
 	}
 	
+	/**
+	 * Creates an {@link ExecutableElement} instance by given method and {@link MethodBuilder}
+	 * @param method - a method
+	 * @return an {@link ExecutableElement} representation of given method
+	 */
 	public static ExecutableElement buildMethodElement(Method method) {
 		MethodBuilder methodBuilder =
 				new MethodBuilder(method.getName(), method.getReturnType(), Modifier.PUBLIC);
@@ -125,6 +137,11 @@ public class ImplementorUtil {
 				.build();
 	}
 	
+	/**
+	 * Creates an {@link ExecutableElement} instance by given constructor and {@link ConstructorBuilder}
+	 * @param c - a constructor
+	 * @return an {@link ExecutableElement} representation of given constructor
+	 */
 	public static ExecutableElement buildConstructorElement(Constructor<?> c) {
 		ConstructorBuilder cBuilder = new ConstructorBuilder(Modifier.PUBLIC);
 		
@@ -133,6 +150,12 @@ public class ImplementorUtil {
 				.build();
 	}
 	
+	/**
+	 * Adds thrown types and parameters from executable to executable builder
+	 * @param executable - an {@link Executable} instance
+	 * @param b - an {@link ExecutableBuilder} instance
+	 * @return b
+	 */
 	private static ExecutableBuilder addThrownAndArgs(Executable executable, ExecutableBuilder b) {
 		for (Class<?> throwable : executable.getExceptionTypes()) {
 			@SuppressWarnings("unchecked")
@@ -147,6 +170,11 @@ public class ImplementorUtil {
 		return b;
 	}
 	
+	/**
+	 * TODO
+	 * @param c - a constructor
+	 * @return
+	 */
 	private static String getConstructorBody(Constructor<?> c) {
 		StringBuilder result = new StringBuilder().append("super(");
 		Parameter[] params = c.getParameters();

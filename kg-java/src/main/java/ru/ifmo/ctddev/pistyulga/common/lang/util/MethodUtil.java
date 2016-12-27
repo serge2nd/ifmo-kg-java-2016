@@ -3,13 +3,17 @@ package ru.ifmo.ctddev.pistyulga.common.lang.util;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
+/**
+ * Utility methods working with methods
+ */
 public class MethodUtil {
 	/** Private constructor for this static class */
 	private MethodUtil() {}
 	
 	/**
+	 * Gets method signature (see what returns)
 	 * @param method - a method
-	 * @return - the string formatted like "{@code <method_name>(<param1_type>, <param2_type>, ..., <paramN_type>)}"
+	 * @return - a string formatted like "{@code <method_name>(<param1_type>, <param2_type>, ..., <paramN_type>)}"
 	 */
 	public static String getSignature(Method method) {
 		StringBuilder result =

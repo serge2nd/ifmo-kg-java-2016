@@ -84,11 +84,31 @@
   					</configuration>
   				</execution>
   				
+  				<!-- Parallel mapper -->
+  				<execution>
+  					<id>mapper-compile</id>
+  					<phase>compile</phase>
+  					<goals><goal>compile</goal></goals>
+  					<configuration>
+  						<includes>
+  							<include>**/ru/ifmo/ctddev/pistyulga/concurrent/**</include>
+  						</includes>
+  						<compilerArguments>
+  							<classpath>${project.basedir}/lib/IterativeParallelismTest.jar;${project.basedir}/lib/ParallelMapperTest.jar</classpath>
+  						</compilerArguments>
+  					</configuration>
+  				</execution>
+  				
   				<!-- All classes -->
   				<execution>
   					<id>all-compile</id>
   					<phase>compile</phase>
   					<goals><goal>compile</goal></goals>
+  					<configuration>
+  						<compilerArguments>
+  							<classpath>${project.basedir}/lib/ImplementorTest.jar;${project.basedir}/lib/IterativeParallelismTest.jar;${project.basedir}/lib/ParallelMapperTest.jar</classpath>
+  						</compilerArguments>
+  					</configuration>
   				</execution>
   			</executions>
   		</plugin>
@@ -161,6 +181,19 @@
   						</archive>
   						<includes>
   							<include>**/ru/ifmo/ctddev/pistyulga/implementor/**</include>
+  						</includes>
+  					</configuration>
+  				</execution>
+  				
+  				<!-- Parallel mapper -->
+  				<execution>
+  					<id>mapper-jar</id>
+  					<phase>package</phase>
+  					<goals><goal>jar</goal></goals>
+  					<configuration>
+  						<classifier>mapper</classifier>
+  						<includes>
+  							<include>**/ru/ifmo/ctddev/pistyulga/concurrent/**</include>
   						</includes>
   					</configuration>
   				</execution>

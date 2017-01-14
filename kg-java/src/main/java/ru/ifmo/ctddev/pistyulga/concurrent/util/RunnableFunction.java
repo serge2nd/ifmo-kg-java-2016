@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.pistyulga.concurrent;
+package ru.ifmo.ctddev.pistyulga.concurrent.util;
 
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;

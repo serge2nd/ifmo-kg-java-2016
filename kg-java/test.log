@@ -6,13 +6,13 @@ Running test01_oneEmptyFile
 Running test02_tenEmptyFiles
 === Running test03_missingFiles
 Running test03_missingFiles
-2016-12-13 02-11-11 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: 99tqvAhbjuZ18crACi2VENBtN6SBKA
-2016-12-13 02-11-11 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: lxPDklZD61ycKyS4ySUfNAd106TxnY
-2016-12-13 02-11-11 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: MY3yyxaTkK3bZtuL2o4Bbnu7DctYqy
+2017-01-14 04-13-19 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: 99tqvAhbjuZ18crACi2VENBtN6SBKA
+2017-01-14 04-13-19 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: lxPDklZD61ycKyS4ySUfNAd106TxnY
+2017-01-14 04-13-19 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: MY3yyxaTkK3bZtuL2o4Bbnu7DctYqy
 === Running test04_errorReading
 Running test04_errorReading
-2016-12-13 02-11-11 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: Cannot read dir __Test__Walk__..
-2016-12-13 02-11-11 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: __Test__Walk__@
+2017-01-14 04-13-19 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: Cannot read dir __Test__Walk__..
+2017-01-14 04-13-19 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: __Test__Walk__@
 === Running test05_smallRandomFiles
 Running test05_smallRandomFiles
 === Running test06_mediumRandomFiles
@@ -49,14 +49,14 @@ Certificate: CqHm40lN3W4ieji2G7gc1IHV8DI=
 == Running test03_naturalOrder
 == Running test04_externalOrder
 == Running test05_constructorPerformance
-    constructor done in 12ms
+    constructor done in 15ms
 == Running test06_immutable
 == Running test07_contains
 == Running test08_containsPerformance
-    contains done in 20ms
+    contains done in 14ms
 == Running test09_containsAll
 == Running test10_containsAllPerformance
-    contains done in 12ms
+    contains done in 14ms
 == Running test11_comparator
 == Running test12_headSet
 == Running test13_tailSet
@@ -130,7 +130,7 @@ Certificate: 19BJWdXp5ZdwEkZXl37lmLqCWts=
 |:...       |
 ||X..       |
 +-----------+
-== Running test01_constructor
+þÿ== Running test01_constructor
 == Running test15_encoding
 == Running test07_defaultConstructorClasses
 == Running test08_noDefaultConstructorClasses
@@ -193,4 +193,923 @@ Certificate: 5UqI8QzJuaJeB/tArTbqdUASm2Q=
 |        o  |
 |       .:: |
 |        X  |
++-----------+
+=== Running test07_join
+    --- Size 10000
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test08_filter
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test09_map
+    --- Size 10000
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test01_maximum
+    --- Size 10000
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test02_minimum
+    --- Size 10000
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test03_all
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test04_any
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test05_sleepPerformance
+Speed up 2,0
+=== Running test06_burnPerformance
+Speed up 1,4
+============================
+OK ListIPTest for ru.ifmo.ctddev.pistyulga.concurrent.IterativeParallelism
+Class: ListIPTest
+Salt: 
+Certificate: MaRBO2Pt6RACk7vSiczIUl9WEro=
++-----------+
+|         X |
+|         o.|
+|        ..:|
+|        :o.|
+|        :o:|
+|     ... o:|
+|      ::o.:|
+|      :o..:|
+|      .:o.:|
+|      ..:::|
+|       X.oo|
++-----------+
+=== Running test05_sleepPerformance
+Speed up 1,0
+Speed up 3,9
+=== Running test07_join
+    --- Size 10000
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Common, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test08_filter
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test09_map
+    --- Size 10000
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        * 2, threads:  1 2 3 4 5 6 7 8 9 10
+        is even, threads:  1 2 3 4 5 6 7 8 9 10
+        toString, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test01_maximum
+    --- Size 10000
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test02_minimum
+    --- Size 10000
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Natural order, threads:  1 2 3 4 5 6 7 8 9 10
+        Reverse order, threads:  1 2 3 4 5 6 7 8 9 10
+        Div 100, threads:  1 2 3 4 5 6 7 8 9 10
+        Even first, threads:  1 2 3 4 5 6 7 8 9 10
+        All equal, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test03_all
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test04_any
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 10000
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 5
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 2
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+    --- Size 1
+        Equal 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Greater than 0, threads:  1 2 3 4 5 6 7 8 9 10
+        Even, threads:  1 2 3 4 5 6 7 8 9 10
+        True, threads:  1 2 3 4 5 6 7 8 9 10
+        False, threads:  1 2 3 4 5 6 7 8 9 10
+
+=== Running test06_burnPerformance
+Speed up 1,9
+============================
+OK ListMapperTest for ru.ifmo.ctddev.pistyulga.concurrent.ParallelMapperImpl,ru.ifmo.ctddev.pistyulga.concurrent.PMIterativeParallelism
+Class: ListMapperTest
+Salt: 
+Certificate: ojONco2kK+c3/0833gvGZiWZxQo=
++-----------+
+|      :oo  |
+|      ..o: |
+|     .. :: |
+|    .:oX . |
+|     .X\o  |
+|     ooX   |
+|     :X    |
+|     oo    |
+|     .oo   |
+|      o.   |
+|           |
 +-----------+

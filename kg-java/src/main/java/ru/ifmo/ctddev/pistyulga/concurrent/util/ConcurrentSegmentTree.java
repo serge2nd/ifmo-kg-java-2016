@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.pistyulga.concurrent;
+package ru.ifmo.ctddev.pistyulga.concurrent.util;
 
 import java.util.Iterator;
 import java.util.List;
@@ -10,7 +10,7 @@ import static java.lang.Math.ceil;
 
 /**
  * @author Serge
- * @see <a href="https://neerc.ifmo.ru/wiki/index.php?title=Дерево_отрезков._Построение">Дерево отрезков. Построение</a>
+ * @see <a href="https://neerc.ifmo.ru/wiki/index.php?title=Р”РµСЂРµРІРѕ_РѕС‚СЂРµР·РєРѕРІ._РџРѕСЃС‚СЂРѕРµРЅРёРµ">Р”РµСЂРµРІРѕ РѕС‚СЂРµР·РєРѕРІ. РџРѕСЃС‚СЂРѕРµРЅРёРµ</a>
  */
 public class ConcurrentSegmentTree<T> {
 	private final Node[] tree;
@@ -19,7 +19,7 @@ public class ConcurrentSegmentTree<T> {
 	
 	private static int calcSegmentTreeSize(int length) {
 		int upperPowerOf2 = (int)ceil(log(length)/log(2));
-		return (1 << (upperPowerOf2 + 1)) - (1 << upperPowerOf2) + length - 1;
+		return (1 << upperPowerOf2) + length - 1;
 	}
 	
 	public ConcurrentSegmentTree(List<? extends T> list, BinaryOperator<T> op, Executor executor) {
@@ -112,7 +112,7 @@ public class ConcurrentSegmentTree<T> {
 				return;
 			}
 			
-			// If this node does not have at least one child,
+			// If this node have no at least one child,
 			// the result is another child value or empty
 			if (existsLeft || existsRight) {
 				if (existsLeft)

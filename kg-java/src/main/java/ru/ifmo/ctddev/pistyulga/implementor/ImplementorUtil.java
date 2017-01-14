@@ -14,7 +14,6 @@ import java.util.Queue;
 import java.util.Set;
 
 import javax.lang.model.element.ExecutableElement;
-import javax.swing.event.AncestorEvent;
 
 import ru.ifmo.ctddev.pistyulga.common.lang.util.MethodUtil;
 import ru.ifmo.ctddev.pistyulga.implementor.lang.builder.ExecutableBuilder;

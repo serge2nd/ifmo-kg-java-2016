@@ -99,6 +99,21 @@
   					</configuration>
   				</execution>
   				
+  				<!-- HelloUDP -->
+  				<execution>
+  					<id>helloudp-compile</id>
+  					<phase>compile</phase>
+  					<goals><goal>compile</goal></goals>
+  					<configuration>
+  						<includes>
+  							<include>**/ru/ifmo/ctddev/pistyulga/helloudp/**</include>
+  						</includes>
+  						<compilerArguments>
+  							<classpath>${project.basedir}/lib/HelloUDPTest.jar</classpath>
+  						</compilerArguments>
+  					</configuration>
+  				</execution>
+  				
   				<!-- All classes -->
   				<execution>
   					<id>all-compile</id>
@@ -106,7 +121,7 @@
   					<goals><goal>compile</goal></goals>
   					<configuration>
   						<compilerArguments>
-  							<classpath>${project.basedir}/lib/ImplementorTest.jar;${project.basedir}/lib/IterativeParallelismTest.jar;${project.basedir}/lib/ParallelMapperTest.jar</classpath>
+  							<classpath>${project.basedir}/lib/ImplementorTest.jar;${project.basedir}/lib/IterativeParallelismTest.jar;${project.basedir}/lib/ParallelMapperTest.jar;${project.basedir}/lib/HelloUDPTest.jar</classpath>
   						</compilerArguments>
   					</configuration>
   				</execution>
@@ -194,6 +209,19 @@
   						<classifier>mapper</classifier>
   						<includes>
   							<include>**/ru/ifmo/ctddev/pistyulga/concurrent/**</include>
+  						</includes>
+  					</configuration>
+  				</execution>
+  				
+  				<!-- HelloUDP -->
+  				<execution>
+  					<id>helloudp-jar</id>
+  					<phase>package</phase>
+  					<goals><goal>jar</goal></goals>
+  					<configuration>
+  						<classifier>helloudp</classifier>
+  						<includes>
+  							<include>**/ru/ifmo/ctddev/pistyulga/helloudp/**</include>
   						</includes>
   					</configuration>
   				</execution>

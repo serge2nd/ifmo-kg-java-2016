@@ -6,13 +6,13 @@ Running test01_oneEmptyFile
 Running test02_tenEmptyFiles
 === Running test03_missingFiles
 Running test03_missingFiles
-2017-01-14 04-13-19 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: 99tqvAhbjuZ18crACi2VENBtN6SBKA
-2017-01-14 04-13-19 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: lxPDklZD61ycKyS4ySUfNAd106TxnY
-2017-01-14 04-13-19 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: MY3yyxaTkK3bZtuL2o4Bbnu7DctYqy
+2017-01-14 09-50-40 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: 99tqvAhbjuZ18crACi2VENBtN6SBKA
+2017-01-14 09-50-40 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: lxPDklZD61ycKyS4ySUfNAd106TxnY
+2017-01-14 09-50-40 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: MY3yyxaTkK3bZtuL2o4Bbnu7DctYqy
 === Running test04_errorReading
 Running test04_errorReading
-2017-01-14 04-13-19 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: Cannot read dir __Test__Walk__..
-2017-01-14 04-13-19 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: __Test__Walk__@
+2017-01-14 09-50-40 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: Cannot read dir __Test__Walk__..
+2017-01-14 09-50-40 ru.ifmo.ctddev.pistyulga.walk.Walk WARNING: I/O error: __Test__Walk__@
 === Running test05_smallRandomFiles
 Running test05_smallRandomFiles
 === Running test06_mediumRandomFiles
@@ -49,20 +49,20 @@ Certificate: CqHm40lN3W4ieji2G7gc1IHV8DI=
 == Running test03_naturalOrder
 == Running test04_externalOrder
 == Running test05_constructorPerformance
-    constructor done in 15ms
+    constructor done in 16ms
 == Running test06_immutable
 == Running test07_contains
 == Running test08_containsPerformance
-    contains done in 14ms
+    contains done in 15ms
 == Running test09_containsAll
 == Running test10_containsAllPerformance
-    contains done in 14ms
+    contains done in 11ms
 == Running test11_comparator
 == Running test12_headSet
 == Running test13_tailSet
 == Running test14_subSet
 == Running test15_tailSetPerformance
-    tailSet done in 16ms
+    tailSet done in 17ms
 == Running test16_first
 == Running test17_last
 ============================
@@ -376,9 +376,9 @@ Certificate: 5UqI8QzJuaJeB/tArTbqdUASm2Q=
 === Running test05_sleepPerformance
 Speed up 2,0
 === Running test06_burnPerformance
-Speed up 1,4
+Speed up 1,5
 ============================
-OK ListIPTest for ru.ifmo.ctddev.pistyulga.concurrent.IterativeParallelism
+OK ListIPTest for ru.ifmo.ctddev.pistyulga.concurrent.PMIterativeParallelism
 Class: ListIPTest
 Salt: 
 Certificate: MaRBO2Pt6RACk7vSiczIUl9WEro=
@@ -1094,7 +1094,7 @@ Speed up 3,9
         False, threads:  1 2 3 4 5 6 7 8 9 10
 
 === Running test06_burnPerformance
-Speed up 1,9
+Speed up 1,7
 ============================
 OK ListMapperTest for ru.ifmo.ctddev.pistyulga.concurrent.ParallelMapperImpl,ru.ifmo.ctddev.pistyulga.concurrent.PMIterativeParallelism
 Class: ListMapperTest
@@ -1112,4 +1112,393 @@ Certificate: ojONco2kK+c3/0833gvGZiWZxQo=
 |     .oo   |
 |      o.   |
 |           |
++-----------+
+=== Running test01_singleRequest
+=== Running test02_multipleClients
+=== Running test03_multipleRequests
+=== Running test04_parallelRequests
+=== Running test05_parallelClients
+=== Running test06_dos
+=== Running test07_noDoS
+============================
+OK HelloServerTest for ru.ifmo.ctddev.pistyulga.helloudp.HelloUDPServer
+Class: HelloServerTest
+Salt: 
+Certificate: 0WpkbiTfrc81bsCOxgdgp9GVEcQ=
++-----------+
+|           |
+|  :o       |
+|  .\o      |
+|  .|:.     |
+|   .:o     |
+|  .:|o     |
+|   oX\.    |
+|  : XX     |
+|  ...::    |
+|   : ..    |
+|   :       |
++-----------+
+=== Running test01_singleRequest
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_0
+socket closed
+=== Running test02_sequence
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_10
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_11
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_12
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_13
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_14
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_15
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_16
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_17
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_18
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_19
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_20
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_21
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_22
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_23
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_24
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_25
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_26
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_27
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_28
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_29
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_30
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_31
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_32
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_33
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_34
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_35
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_36
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_37
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_38
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_39
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_40
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_41
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_42
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_43
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_44
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_45
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_46
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_47
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_48
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_49
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_50
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_51
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_52
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_53
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_54
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_55
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_56
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_57
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_58
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_59
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_60
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_61
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_62
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_63
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_64
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_65
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_66
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_67
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_68
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_69
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_70
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_71
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_72
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_73
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_74
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_75
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_76
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_77
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_78
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_79
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_80
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_81
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_82
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_83
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_84
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_85
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_86
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_87
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_88
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_89
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_90
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_91
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_92
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_93
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_94
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_95
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_96
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_97
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_98
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_99
+=== Running test03_singleWithFailures
+socket closed
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_0
+socket closed
+=== Running test04_sequenceWithFailures
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_10
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_11
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_12
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_13
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_14
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_15
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_16
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_17
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_18
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_19
+=== Running test05_singleMultithreaded
+socket closed
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_0
+socket closed
+=== Running test06_sequenceMultithreaded
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_9
+socket closed
+=== Running test07_sequenceMultithreadedWithFails
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest3_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_0
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest7_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_1
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_2
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_3
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest5_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest0_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_4
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest6_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest1_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest4_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest8_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_5
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_6
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_7
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest9_9
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_8
+Hello, info.kgeorgiy.java.advanced.hello.HelloClientTest2_9
+socket closed
+============================
+OK HelloClientTest for ru.ifmo.ctddev.pistyulga.helloudp.HelloUDPClient
+Class: HelloClientTest
+Salt: 
+Certificate: W0YNuCkncOZVm7U/uivQDCkd0dU=
++-----------+
+|       .   |
+|       :.  |
+|      .:.. |
+|       .:::|
+|     .:.:..|
+|     .::. .|
+|     .o.:..|
+|     . oo:.|
+|     .:.:o.|
+|     : o::.|
+|     o:o : |
 +-----------+
